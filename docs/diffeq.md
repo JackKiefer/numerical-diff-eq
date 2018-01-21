@@ -31,10 +31,10 @@ Num logistic(Num const & p0, Param1 const & a, Param2 const & b, Time const & t)
 
 #### Parameters
 
-* **p0** - The initial condition \\[P(0)\\]
-* **a** - The scalar \\[a\\]
-* **b** - The scalar \\[b\\]
-* **t** - The point in time \\[t\\]
+* **p0** - The initial condition \\(P(0)\\)
+* **a** - The scalar \\(a\\)
+* **b** - The scalar \\(b\\)
+* **t** - The point in time \\(t\\)
 
 Returns a solution that is of the same data type as the initial condition.
 
@@ -67,18 +67,18 @@ std::optional<std::complex<Num>> solcc(Num y0, Num v0, Param1 a, Param2 b, Param
 
 #### Parameters
 
-* **y0** - The initial condition \\[y(0)\\]
-* **v0** - The initial condition \\[y^{\prime}(0)\\]
-* **a** - The scalar \\[a\\]
-* **b** - The scalar \\[b\\]
-* **c** - The scalar \\[c\\]
-* **t** - The point in time \\[t\\]
+* **y0** - The initial condition \\(y(0)\\)
+* **v0** - The initial condition \\(y^{\prime}(0)\\)
+* **a** - The scalar \\(a\\)
+* **b** - The scalar \\(b\\)
+* **c** - The scalar \\(c\\)
+* **t** - The point in time \\(t\\)
 
 Returns a ``std::optional`` containing a ``std::complex`` solution of the same data type as the initial conditions. The functional will fail and the optional will contain nothing if the characteristic roots are equal to each other.
 
 #### Example
 
-Compute the solution to the equation \\[ 2y^{\prime \prime} + 3y^{\prime} - 2y = 0 \\] at time {% raw %} $t=4$ {% endraw %} with initial conditions $y(0) = 1$ and \\[y^{\prime}(0) = 0 \\]. Store the answer in ``result``.
+Compute the solution to the equation \\[ 2y^{\prime \prime} + 3y^{\prime} - 2y = 0 \\] at time \\(t=4\\) with initial conditions \\(y(0) = 1\\) and \\(y^{\prime}(0) = 0 \\). Store the answer in ``result``.
 
 {% highlight C++ %}
 auto result = nde::solcc(1.0,0.0,2.0,3.0,-2.0,4.0).value();
