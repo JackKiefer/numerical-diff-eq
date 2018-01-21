@@ -15,7 +15,7 @@ layout: default
 
 ### logistic
 
-Computes the solution at time _t_ to the logistic equation of the form:
+Computes the solution at time \\(t\\) to the logistic equation of the form:
 \\[ \frac{dP}{dt} = aP + bP^2 \\]
 
 #### Definition
@@ -31,10 +31,10 @@ Num logistic(Num const & p0, Param1 const & a, Param2 const & b, Time const & t)
 
 #### Parameters
 
-* **p0** - The initial condition \\(P(0)\\)
-* **a** - The scalar \\(a\\)
-* **b** - The scalar \\(b\\)
-* **t** - The point in time \\(t\\)
+* ``p0`` - The initial condition \\(P(0)\\)
+* ``a`` - The scalar \\(a\\)
+* ``b`` - The scalar \\(b\\)
+* ``t`` - The point in time \\(t\\)
 
 Returns a solution that is of the same data type as the initial condition.
 
@@ -48,7 +48,7 @@ auto result = nde::logistic(2.6,1.4,2.0,10.0);
 
 ### solcc
 
-Computes the solution at time _t_ to the **s**econd-**o**rder, **l**inear, **c**onstant-**c**oefficient equation of the form:
+Computes the solution at time \\(t\\) to the **s**econd-**o**rder, **l**inear, **c**onstant-**c**oefficient equation of the form:
 \\[ ay^{\prime \prime} + by^{\prime} + cy = f(t) \\]
 
 #### Definition
@@ -67,12 +67,12 @@ std::optional<std::complex<Num>> solcc(Num y0, Num v0, Param1 a, Param2 b, Param
 
 #### Parameters
 
-* **y0** - The initial condition \\(y(0)\\)
-* **v0** - The initial condition \\(y^{\prime}(0)\\)
-* **a** - The scalar \\(a\\)
-* **b** - The scalar \\(b\\)
-* **c** - The scalar \\(c\\)
-* **t** - The point in time \\(t\\)
+* ``y0`` - The initial condition \\(y(0)\\)
+* ``v0`` - The initial condition \\(y^{\prime}(0)\\)
+* ``a`` - The scalar \\(a\\)
+* ``b`` - The scalar \\(b\\)
+* ``c`` - The scalar \\(c\\)
+* ``t`` - The point in time \\(t\\)
 
 Returns a ``std::optional`` containing a ``std::complex`` solution of the same data type as the initial conditions. The functional will fail and the optional will contain nothing if the characteristic roots are equal to each other.
 
