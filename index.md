@@ -1,3 +1,4 @@
+{% include mathjax.html %}
 ---
 math: true
 layout: default
