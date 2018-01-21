@@ -3,8 +3,23 @@
 
 #include <cmath>
 #include <complex>
+#include <optional>
 
 namespace nde {
+
+double maceps()
+{
+  typedef union
+  {
+    long long ll;
+    double d;
+  } data;
+
+  data s;
+  s.d = 1.0;
+  s.ll++;
+  return s.d - 1.0;
+}
 
 double const h_DIF = 0.00001;
 
@@ -52,14 +67,19 @@ template
   typename Param2,
   typename Param3
   >
-std::complex<Num> solcc(Num y0, Num v0, Param1 a, Param2 b, Param3 c, Time t)
+std::optional<std::complex<Num>> solcc(Num y0, Num v0, Param1 a, Param2 b, Param3 c, Time t)
 {
-  // if r1 = r1 return Nothing
-
   /* Characteristic roots from quadratic formula */
   std::complex<Num> radical = (b*b)-(4.0*a*c);
   auto const r1 = (-b + sqrt(radical))/(2.0*a);
   auto const r2 = (-b - sqrt(radical))/(2.0*a);
+
+  /* No solution if roots are the same */
+  if (r1 == r2)
+  {
+    return {};
+  }
+
   auto const c1 = ( v0-(r2*y0) ) / ( r1-r2 );
   auto const c2 = ( (r1*y0)-v0 ) / ( r1-r2 );
   return c1*exp(r1*t) + c2*exp(r2*t);
