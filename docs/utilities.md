@@ -8,15 +8,17 @@
 
 ### maceps
 
+Calculates machine epsilon.
+
 **Definition:**
 {% highlight C++ %}
 double maceps()
 {% endhighlight %}
 
-**Description:**
-Calculates machine epsilon
 
 ### absoluteError
+
+Returns the absolute error between the expected value and the measured value
 
 **Definition:**
 {% highlight C++ %}
@@ -24,17 +26,13 @@ template <typename T>
 T absoluteError(T const & expectedVal, T const & measuredVal)
 {% endhighlight %}
 
-**Description:**
-Calculates absolute error between the expected value and the measured value
-
 
 ### relativeError
+
+Returns the relative error between the expected value and the measured value
 
 **Definition:**
 {% highlight C++ %}
 template <typename T>
 T relativeError(T const & expectedVal, T const & measuredVal)
 {% endhighlight %}
-
-**Description:**
-Calculates relative error between the expected value and the measured value
