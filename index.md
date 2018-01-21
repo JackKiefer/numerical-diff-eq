@@ -2,5 +2,8 @@ Welcome! This repository is filled with my coursework for the Numerical Solution
 
 You're a beautiful human being!
 
+Testing LaTeX:
+## \\[ \frac{x^2}{2} \\]
+
 # Docs and stuff
 * [Machine epsilon](docs/machine_epsilon.md)
