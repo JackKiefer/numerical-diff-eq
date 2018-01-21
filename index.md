@@ -11,4 +11,4 @@ Testing LaTeX:
 ## \\[ \frac{x^2}{2} \\]
 
 # Docs and stuff
-* [Machine epsilon](docs/machine_epsilon.md)
+* [Utilities](docs/utilities.md)
