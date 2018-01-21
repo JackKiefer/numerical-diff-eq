@@ -40,7 +40,7 @@ Returns a solution that is of the same data type as the initial condition.
 
 #### Example
 
-Compute the solution to the equation \\[ \frac{dP}{dt} = 1.4P + 2P^2 \\] at time \\[t=10\\] with initial condition \\[P(0) = 2.6\\] and store the answer in ``result``.
+Compute the solution to the equation \\[ \frac{dP}{dt} = 1.4P + 2P^2 \\] at time \\(t=10\\) with initial condition \\(P(0) = 2.6\\) and store the answer in ``result``.
 
 {% highlight C++ %}
 auto result = nde::logistic(2.6,1.4,2.0,10.0);
