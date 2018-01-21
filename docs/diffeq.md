@@ -46,7 +46,7 @@ Compute the solution to the equation \\[ \frac{dP}{dt} = 1.4P + 2P^2 \\] at time
 auto result = nde::logistic(2.6,1.4,2.0,10.0);
 {% endhighlight %}
 
-### logistic
+### solcc
 
 Computes the solution at time _t_ to the **s**econd-**o**rder, **l**inear, **c**onstant-**c**oefficient equation of the form:
 \\[ ay^{\prime \prime} + by^{\prime} + cy = f(t) \\]
@@ -78,7 +78,7 @@ Returns a ``std::optional`` containing a ``std::complex`` solution of the same d
 
 #### Example
 
-Compute the solution to the equation \\[ 2y^{\prime \prime} + 3y^{\prime} - 2y = 0 \\] at time \\[t=4\\] with initial conditions \\[y(0) = 1\\] and \\[y^{\prime}(0) = 0 \\]. Store the answer in ``result``.
+Compute the solution to the equation \\[ 2y^{\prime \prime} + 3y^{\prime} - 2y = 0 \\] at time {% raw %} $t=4$ {% endraw %} with initial conditions \\[y(0) = 1\\] and \\[y^{\prime}(0) = 0 \\]. Store the answer in ``result``.
 
 {% highlight C++ %}
 auto result = nde::solcc(1.0,0.0,2.0,3.0,-2.0,4.0).value();
