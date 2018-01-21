@@ -70,7 +70,7 @@ template
 std::optional<std::complex<Num>> solcc(Num y0, Num v0, Param1 a, Param2 b, Param3 c, Time t)
 {
   /* Characteristic roots from quadratic formula */
-  std::complex<Num> radical = (b*b)-(4.0*a*c);
+  std::complex<Num> const radical = (b*b)-(4.0*a*c);
   auto const r1 = (-b + sqrt(radical))/(2.0*a);
   auto const r2 = (-b - sqrt(radical))/(2.0*a);
 
