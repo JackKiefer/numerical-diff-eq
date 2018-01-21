@@ -1,4 +1,3 @@
-{% include mathjax.html %}
 ---
 math: true
 layout: default
@@ -9,7 +8,7 @@ Welcome! This repository is filled with my coursework for the Numerical Solution
 You're a beautiful human being!
 
 Testing LaTeX:
-## \\[ \frac{x^2}{2} \\]
+\\[ \frac{x^3}{2} \\]
 
 # Docs and stuff
 * [Utilities](docs/utilities.md)
