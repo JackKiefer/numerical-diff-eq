@@ -3,8 +3,8 @@
 | Routine | Description |
 |---------|-------------|
 | [maceps](#maceps)  | Calculate [machine epsilon](https://en.wikipedia.org/wiki/Machine_epsilon) |
-| [absoluteError](#absoluteError) | Calculate absolute error between two numbers |
-| [relativeError](#relativeError) | Calculate relative error between two numbers |
+| [absoluteError](#absoluteerror) | Calculate absolute error between two numbers |
+| [relativeError](#relativeerror) | Calculate relative error between two numbers |
 
 ### maceps
 
@@ -18,7 +18,7 @@ double maceps()
 
 ### absoluteError
 
-Returns the absolute error between the expected value and the measured value
+Returns the absolute error between the expected value and the measured value.
 
 **Definition:**
 {% highlight C++ %}
@@ -29,7 +29,7 @@ T absoluteError(T const & expectedVal, T const & measuredVal)
 
 ### relativeError
 
-Returns the relative error between the expected value and the measured value
+Returns the relative error between the expected value and the measured value.
 
 **Definition:**
 {% highlight C++ %}
