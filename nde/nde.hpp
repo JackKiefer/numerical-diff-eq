@@ -3,8 +3,8 @@
 
 #include <cmath>
 #include <complex>
-#include <optional>
 #include <functional>
+#include <optional>
 
 namespace nde
 {
@@ -52,10 +52,12 @@ template <typename Time,
           typename Num,
           typename Param1,
           typename Param2>
-std::function<Num(Time)> logistic(Num const& p0, Param1 const& a, Param2 const& b)
+std::function<Num(Time)> logistic(
+    Num const& p0,
+    Param1 const& a, 
+    Param2 const& b)
 {
-  return [=](Time t)
-  {
+  return [=](Time t) {
     return (a / (((a / p0) - b) * exp((-a) * t) + b));
   };
 }
@@ -67,7 +69,12 @@ template <typename Time,
           typename Param1,
           typename Param2,
           typename Param3>
-std::function<Num(Time)> solcc(Num const& y0, Num const& v0, Param1 const& a, Param2 const& b, Param3 const& c)
+std::function<Num(Time)> solcc(
+    Num const& y0,
+    Num const& v0,
+    Param1 const& a,
+    Param2 const& b,
+    Param3 const& c)
 {
   /* Characteristic roots from quadratic formula */
   std::complex<Num> const radical = (b * b) - (4.0 * a * c);
@@ -77,9 +84,8 @@ std::function<Num(Time)> solcc(Num const& y0, Num const& v0, Param1 const& a, Pa
   /* Separate solutions if roots are the same */
   if (r1 == r2)
   {
-    auto const c = v0 - (r1*y0);
-    return [=](Time t) 
-    {
+    auto const c = v0 - (r1 * y0);
+    return [=](Time t) {
       return (y0 * exp(r1 * t) + (c * t * exp(r1 * t))).real();
     };
   }
@@ -87,8 +93,7 @@ std::function<Num(Time)> solcc(Num const& y0, Num const& v0, Param1 const& a, Pa
   {
     auto const c1 = (v0 - (r2 * y0)) / (r1 - r2);
     auto const c2 = ((r1 * y0) - v0) / (r1 - r2);
-    return [=](Time t)
-    {
+    return [=](Time t) {
       return (c1 * exp(r1 * t) + c2 * exp(r2 * t)).real();
     };
   }

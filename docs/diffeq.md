@@ -25,7 +25,10 @@ template <typename Time,
           typename Num,
           typename Param1,
           typename Param2>
-std::function<Num(Time)> logistic(Num const& p0, Param1 const& a, Param2 const& b)
+std::function<Num(Time)> logistic(
+    Num const& p0,
+    Param1 const& a, 
+    Param2 const& b)
 
 {% endhighlight %}
 
@@ -63,7 +66,12 @@ template <typename Time,
           typename Param1,
           typename Param2,
           typename Param3>
-std::function<Num(Time)> solcc(Num const& y0, Num const& v0, Param1 const& a, Param2 const& b, Param3 const& c)
+std::function<Num(Time)> solcc(
+    Num const& y0,
+    Num const& v0,
+    Param1 const& a,
+    Param2 const& b,
+    Param3 const& c)
 
 {% endhighlight %}
 
