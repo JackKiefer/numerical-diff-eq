@@ -3,8 +3,8 @@
 | Routine | Description |
 |---------|-------------|
 | [maceps](#maceps)  | Calculate [machine epsilon](https://en.wikipedia.org/wiki/Machine_epsilon) |
-| [absoluteError](#absoluteerror) | Calculate absolute error between two numbers |
-| [relativeError](#relativeerror) | Calculate relative error between two numbers |
+| [absoluteError](#absoluteerror) | Absolute error between two numbers |
+| [relativeError](#relativeerror) | Relative error between two numbers |
 
 ### maceps
 
