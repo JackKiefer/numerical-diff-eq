@@ -38,7 +38,7 @@ std::function<Num(Time)> logistic(
 * ``a`` - The scalar \\(a\\)
 * ``b`` - The scalar \\(b\\)
 
-Returns a ``std::function<T>`` that takes a type ``T`` as input and returns output as the same data type as the initial conditions.  
+Returns a ``std::function<Num(Time)>``, where the ``Time`` type must be explicitly declared at the call site and ``Num`` is deduced to be the same type as the initial conditions. See the example below.
 
 #### Example
 
@@ -56,7 +56,10 @@ std::cout << p(10.0) << std::endl;
 ### solcc
 
 Solves a **s**econd-**o**rder, **l**inear, **c**onstant-**c**oefficient equation of the form:
+
 \\[ ay^{\prime \prime} + by^{\prime} + cy = f(t) \\]
+
+The function will correctly account for all cases of characteristic roots.
 
 #### Definition
 {% highlight C++ %}
@@ -83,7 +86,7 @@ std::function<Num(Time)> solcc(
 * ``b`` - The scalar \\(b\\)
 * ``c`` - The scalar \\(c\\)
 
-Returns a ``std::function<T>`` that takes a type ``T`` as input and returns output as the same data type as the initial conditions. The function will correctly account for cases of characteristic roots. 
+Returns a ``std::function<Num(Time)>``, where the ``Time`` type must be explicitly declared at the call site and ``Num`` is deduced to be the same type as the initial conditions. See the example below.
 
 #### Example
 
