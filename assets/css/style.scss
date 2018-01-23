@@ -11,6 +11,14 @@ header {
  max-width:774px;
 }
 
+header h1 a {
+  color: #ece4d8;
+}
+
+header h1 a:hover {
+  color: white;
+}
+
 section#downloads,div#no-downloads {
  width:724px;
  background:transparent url(../images/mbg-ramp.jpg) center 171px no-repeat;
