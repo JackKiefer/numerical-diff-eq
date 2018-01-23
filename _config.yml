@@ -1,3 +1,4 @@
 theme: jekyll-theme-merlot
+show_downloads: true
 markdown: kramdown
 mathjax: true
