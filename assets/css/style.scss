@@ -17,13 +17,17 @@ section#downloads,div#no-downloads {
 }
 
 div#no-downloads span.inner {
- width:589px;
+ width:724px;
  background:transparent url(../images/mdownload-sprite.png) 0 0 no-repeat
 }
 
 section#downloads a {
  width:275px;
  background:transparent url(../images/mdownload-sprite.png) 0 0 no-repeat;
+}
+
+pre {
+   font:normal normal .86em/1.7 "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
 }
 
 span.banner-fix {
@@ -37,5 +41,5 @@ span.banner-fix {
 
 footer {
  background:transparent url(../images/mfooter-ramp.jpg) center -1px no-repeat;
- max-width:724px;
+ max-width:737px;
 }
