@@ -15,18 +15,18 @@ layout: default
 
 ### logistic
 
-Computes the solution at time \\(t\\) to the logistic equation of the form:
+Computes the solution the logistic equation of the form:
 \\[ \frac{dP}{dt} = aP + bP^2 \\]
 
 #### Definition
 {% highlight C++ %}
-template 
-< typename Time, 
-  typename Num, 
-  typename Param1, 
-  typename Param2
-  >
-Num logistic(Num const & p0, Param1 const & a, Param2 const & b, Time const & t)
+
+template <typename Time,
+          typename Num,
+          typename Param1,
+          typename Param2>
+std::function<Num(Time)> logistic(Num const& p0, Param1 const& a, Param2 const& b)
+
 {% endhighlight %}
 
 #### Parameters
@@ -34,34 +34,36 @@ Num logistic(Num const & p0, Param1 const & a, Param2 const & b, Time const & t)
 * ``p0`` - The initial condition \\(P(0)\\)
 * ``a`` - The scalar \\(a\\)
 * ``b`` - The scalar \\(b\\)
-* ``t`` - The point in time \\(t\\)
 
-Returns a solution that is of the same data type as the initial condition.
+Returns a ``std::function<T>`` that takes a type ``T`` as input and returns output as the same data type as the initial conditions.  
 
 #### Example
 
-Compute the solution to the equation \\[ \frac{dP}{dt} = 1.4P + 2P^2 \\] at time \\(t=10\\) with initial condition \\(P(0) = 2.6\\) and store the answer in ``result``.
+Compute the solution to the equation \\[ \frac{dP}{dt} = 1.4P + 2P^2 \\] with initial condition \\(P(0) = 2.6\\) and find the output at time \\(t = 10\\)
 
 {% highlight C++ %}
-auto result = nde::logistic(2.6,1.4,2.0,10.0);
+/* Solve the equation */
+auto const p = nde::logistic<double>(2.6,1.4,2.0);
+
+/* Print the output at time t=10 */
+std::cout << p(10.0) << std::endl;
+
 {% endhighlight %}
 
 ### solcc
 
-Computes the solution at time \\(t\\) to the **s**econd-**o**rder, **l**inear, **c**onstant-**c**oefficient equation of the form:
+Solves a **s**econd-**o**rder, **l**inear, **c**onstant-**c**oefficient equation of the form:
 \\[ ay^{\prime \prime} + by^{\prime} + cy = f(t) \\]
 
 #### Definition
 {% highlight C++ %}
 
-template
-< typename Time,
-  typename Num,
-  typename Param1,
-  typename Param2,
-  typename Param3
-  >
-std::optional<std::complex<Num>> solcc(Num y0, Num v0, Param1 a, Param2 b, Param3 c, Time t)
+template <typename Time,
+          typename Num,
+          typename Param1,
+          typename Param2,
+          typename Param3>
+std::function<Num(Time)> solcc(Num const& y0, Num const& v0, Param1 const& a, Param2 const& b, Param3 const& c)
 
 {% endhighlight %}
 
@@ -72,15 +74,19 @@ std::optional<std::complex<Num>> solcc(Num y0, Num v0, Param1 a, Param2 b, Param
 * ``a`` - The scalar \\(a\\)
 * ``b`` - The scalar \\(b\\)
 * ``c`` - The scalar \\(c\\)
-* ``t`` - The point in time \\(t\\)
 
-Returns a ``std::optional`` containing a ``std::complex`` solution of the same data type as the initial conditions. The functional will fail and the optional will contain nothing if the characteristic roots are equal to each other.
+Returns a ``std::function<T>`` that takes a type ``T`` as input and returns output as the same data type as the initial conditions. The function will correctly account for cases of characteristic roots. 
 
 #### Example
 
-Compute the solution to the equation \\[ 2y^{\prime \prime} + 3y^{\prime} - 2y = 0 \\] at time \\(t=4\\) with initial conditions \\(y(0) = 1\\) and \\(y^{\prime}(0) = 0 \\). Store the answer in ``result``.
+Compute the solution to the equation \\[ 2y^{\prime \prime} + 3y^{\prime} - 2y = 0 \\] at time \\(t=4\\) with initial conditions \\(y(0) = 1\\) and \\(y^{\prime}(0) = 0 \\).
 
 {% highlight C++ %}
-auto result = nde::solcc(1.0,0.0,2.0,3.0,-2.0,4.0).value();
+/* Solve the equation */
+auto const y = nde::solcc<double>(1.0,0.0,2.0,3.0,-2.0);
+
+/* Print the output at time t=4 */
+std::cout << y(4.0) << std::endl;
+
 {% endhighlight %}
 
