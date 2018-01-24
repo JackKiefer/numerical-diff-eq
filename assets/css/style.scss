@@ -55,3 +55,16 @@ footer {
 code {
   color: #586e75;
 }
+
+section#downloads a.tgz {
+ float:left;
+ background-position:-362px 0px;
+}
+
+section#downloads a.zip:hover {
+ background-position:0 -197px
+}
+
+section#downloads a.tgz:hover {
+ background-position:-362px -197px
+}
