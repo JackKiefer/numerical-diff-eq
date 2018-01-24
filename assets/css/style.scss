@@ -56,6 +56,10 @@ code {
   color: #586e75;
 }
 
+section#downloads a {
+  width: 362px;
+}
+
 section#downloads a.tgz {
  float:left;
  background-position:-362px 0px;
@@ -68,3 +72,5 @@ section#downloads a.zip:hover {
 section#downloads a.tgz:hover {
  background-position:-362px -197px
 }
+
+
