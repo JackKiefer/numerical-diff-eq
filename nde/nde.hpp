@@ -4,7 +4,7 @@
 #include <cmath>
 #include <complex>
 #include <functional>
-#include <optional>
+#include <numeric>
 
 namespace nde
 {
@@ -47,6 +47,15 @@ T relativeError(T const& expectedVal, T const& measuredVal)
 {
   return absoluteError(expectedVal, measuredVal) / expectedVal;
 }
+
+template <typename Num, typename T>
+Num factorial(T n)
+{
+  std::vector<Num> v(n);
+  std::iota(v.begin(), v.end(), 1);
+  return std::accumulate(v.begin(), v.end(), 1, std::multiplies<Num>());
+}
+
 
 template <typename Time,
           typename Num,
@@ -100,5 +109,6 @@ std::function<Num(Time)> solcc(
 }
 
 } // namespace nde
+
 
 #endif

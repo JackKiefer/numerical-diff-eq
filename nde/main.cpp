@@ -8,4 +8,5 @@ int main()
 
   std::cout << y(10.0) << std::endl;
   std::cout << f(3.0) << std::endl;
+  std::cout << nde::factorial<int>(4) << std::endl;
 }
