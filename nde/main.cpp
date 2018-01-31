@@ -9,4 +9,35 @@ int main()
   std::cout << y(10.0) << std::endl;
   std::cout << f(3.0) << std::endl;
   std::cout << nde::factorial<int>(4) << std::endl;
+
+  nde::Matrix<int> m { 
+    { 1, 1, 1 },
+    { 1, 1, 1 },
+    { 1, 1, 1 } 
+  };
+
+  nde::Matrix<int> a { 
+     { 2, 2, 2 },
+     { 2, 2, 2 },
+     { 2, 2, 2 } 
+  };
+
+  std::cout << (m + a) << std::endl;
+  std::cout << (m - m) << std::endl;
+
+  nde::Matrix<int> p { 
+     { 1, 2, 3 },
+     { 1, 2, 3 } 
+  };
+
+  nde::Matrix<int> q { 
+     { 4, 5, 6 },
+     { 4, 5, 6 },
+     { 4, 5, 6 } 
+  };
+
+  std::cout << (p * q) << std::endl;
+
+
+
 }
