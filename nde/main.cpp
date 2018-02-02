@@ -3,6 +3,17 @@
 
 int main()
 {
+  nde::Matrix<double> a { 
+     { 2, 1, 1, 0 },
+     { 4, 3, 3, 1 },
+     { 8, 7, 9, 5 },
+     { 6, 7, 9, 8 }
+  };
+
+  nde::gaussElim(a);
+
+
+  /*
   auto const y = nde::logistic<double>(2.0, 1.4, 2.0);
   auto const f = nde::solcc<double>(1.0, 0.0, 2.0, 3.0, -2.0);
 
@@ -37,6 +48,7 @@ int main()
   };
 
   std::cout << (p * q) << std::endl;
+  */
 
 
 

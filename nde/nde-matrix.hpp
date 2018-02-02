@@ -11,6 +11,52 @@ namespace nde {
 template <typename T>
 using Matrix = std::vector<std::vector<T>>;
 
+template <typename T>
+nde::Matrix<T> identityMatrix(unsigned int m)
+{
+  nde::Matrix<T> a(m, std::vector<T>(m, 0));
+  for (auto i = 0u; i < m; ++i)
+  {
+    a[i][i] = 1;
+  }
+  return a;
+}
+
+template <typename T>
+nde::Matrix<T> rowSwap(nde::Matrix<T> u, int rowa, int rowb, int colstart, int colend)
+{
+  auto temp = u[rowa];
+  for (auto i = colstart; i <= colend; ++i)
+  {
+    u[rowa][i] = u[rowb][i];
+    u[rowb][i] = temp[i];
+  }
+  return u;
+}
+
+template <typename T>
+nde::Matrix<T> rowSwap(nde::Matrix<T> u, int rowa, int rowb)
+{
+  return rowSwap(u, rowa, rowb, 0, u[0].size() - 1);
+}
+
+template <typename T>
+nde::Matrix<T> rowScalarAdd(nde::Matrix<T> u, T scalar, int scalarRow, int addendRow)
+{
+  for (auto col = 0u; col < u[0].size(); ++col)
+  {
+    u[addendRow][col] += (scalar * u[scalarRow][col]);
+  }
+  return u;
+}
+
+template <typename T>
+nde::Matrix<T> rowEliminate(nde::Matrix<T> u, int pivotRow, int pivotCol, int elimRow)
+{
+  auto scalar = -u[elimRow][pivotCol] / u[pivotRow][pivotCol];
+  return rowScalarAdd(u, scalar, pivotRow, elimRow);
+}
+
 } // namespace nde
 
 #define EXCEPT_MATRIX_SIZE throw std::out_of_range("Matrix sizes must agree");
@@ -84,7 +130,7 @@ std::ostream& operator<<(std::ostream& o, nde::Matrix<T> const & m)
   {
     for (auto j = 0u; j < m[i].size(); ++j)
     {
-      o << std::setw(6) << std::to_string(m[i][j]);
+      o << std::setw(11) << std::setprecision(4) << (m[i][j]);
     }
     if (i < m.size() - 1)
     {

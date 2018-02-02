@@ -5,6 +5,8 @@
 #include <complex>
 #include <functional>
 #include <numeric>
+#include <iostream>
+#include "nde-matrix.hpp"
 
 namespace nde
 {
@@ -80,6 +82,63 @@ template <typename F, typename T>
 auto secondFiniteDif(F const& y, T t)
 {
   return (y(t + h_DIF) - 2.0 * y(t) + y(t - h_DIF)) / (h_DIF * h_DIF);
+}
+
+template <typename T>
+auto colMax(nde::Matrix<T> u, unsigned int columnIndex)
+{
+  std::vector<T> p(0);
+  for (auto i = columnIndex; i < u.size(); ++i)
+  {
+    p.push_back(u[i][columnIndex]);
+  }
+  return std::max_element(p.begin(), p.end()) - p.begin() + columnIndex;
+}
+
+template <typename T>
+void gaussElim(nde::Matrix<T> a)
+{
+  auto m = a.size() - 1; // Largest index
+  auto u = a; 
+  auto l = nde::identityMatrix<T>(m + 1);
+  auto p = l;
+
+  for (auto k = 0u; k <= m - 1; ++k)
+  {
+    auto pivotRow = nde::colMax(u, k + 1); 
+    u = nde::rowSwap(u,pivotRow,k);
+    l = nde::rowSwap(l,k,pivotRow,0,k-1);
+    p = nde::rowSwap(p,pivotRow,k);
+    for (auto elimRow = k + 1; elimRow <= m; ++elimRow)
+    {
+      l[elimRow][k] = u[elimRow][k]/u[k][k];
+      u = nde::rowEliminate(u, k, k, elimRow);
+    }
+  }
+
+
+  /*
+  for (auto k = 0u; k <= m - 1; ++k)
+  {
+    auto i = nde::colMax(u, k);
+    u = nde::rowSwap(u,k,i,k,m);
+    l = nde::rowSwap(l,k,i,0,k-1);
+    p = nde::rowSwap(p,k,i);
+    for (auto j = k + 1; j <= m; ++j)
+    {
+      l[j][k] = u[j][k]/u[k][k];
+      for (auto z = k; z <= m; ++z)
+      {
+        u[j][z] = u[j][z] - l[j][k]*u[k][z];
+      }
+    }
+  }
+  */
+  
+  std::cout << "P: \n" << p << "\n";
+  std::cout << "A: \n" << a << "\n";
+  std::cout << "L: \n" << l << "\n";
+  std::cout << "U: \n" << u << "\n";
 }
 
 } // namespace nde
