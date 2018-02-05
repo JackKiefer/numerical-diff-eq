@@ -1,6 +1,9 @@
 #ifndef NDE_UTILS
 #define NDE_UTILS
 
+#include <vector>
+#include <cmath>
+
 namespace nde
 {
 
@@ -28,6 +31,20 @@ T relativeError(T const& expectedVal, T const& measuredVal)
 {
   return absoluteError(expectedVal, measuredVal) / expectedVal;
 }
+
+template <typename T>
+bool allclose(std::vector<T> const & a, std::vector<T> const & b, T tolerance)
+{
+  for (auto i = 0u; i < a.size(); ++i)
+  {
+    if (std::abs(a[i]-b[i]) > tolerance)
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
 } // namespace nde
 
 

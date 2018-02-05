@@ -95,6 +95,35 @@ auto colMax(nde::Matrix<T> u, unsigned int columnIndex)
   return std::max_element(p.begin(), p.end()) - p.begin() + columnIndex;
 }
 
+
+template <typename T>
+std::vector<T> jacobiIterate(nde::Matrix<T> a, std::vector<T> b, std::vector<T> x, T tolerance)
+{
+  const auto MAX_ITERS = 1000;
+  auto origX = x;
+
+  for (auto k = 0; k < MAX_ITERS; ++k)
+  {
+    for (auto i = 0u; i < a.size(); ++i)
+    {
+      auto sigma = 0;
+      for (auto j = 0u; j < a.size(); ++j)
+      {
+        if (j != i)
+        {
+          sigma += a[i][j]*x[j];
+        }
+      }
+      x[i] = (b[i]-sigma)/a[i][i];
+    }
+    if (nde::allclose(origX, x, tolerance))
+    {
+      break;
+    }
+  }
+  return x;
+}
+
 template <typename T>
 void gaussElim(nde::Matrix<T> a)
 {
@@ -116,29 +145,12 @@ void gaussElim(nde::Matrix<T> a)
     }
   }
 
-
-  /*
-  for (auto k = 0u; k <= m - 1; ++k)
-  {
-    auto i = nde::colMax(u, k);
-    u = nde::rowSwap(u,k,i,k,m);
-    l = nde::rowSwap(l,k,i,0,k-1);
-    p = nde::rowSwap(p,k,i);
-    for (auto j = k + 1; j <= m; ++j)
-    {
-      l[j][k] = u[j][k]/u[k][k];
-      for (auto z = k; z <= m; ++z)
-      {
-        u[j][z] = u[j][z] - l[j][k]*u[k][z];
-      }
-    }
-  }
-  */
-  
   std::cout << "P: \n" << p << "\n";
   std::cout << "A: \n" << a << "\n";
   std::cout << "L: \n" << l << "\n";
   std::cout << "U: \n" << u << "\n";
+
+  std::cout << "LU: \n" << l * u << "\n";
 }
 
 } // namespace nde

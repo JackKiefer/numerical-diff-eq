@@ -3,6 +3,7 @@
 
 int main()
 {
+  /*
   nde::Matrix<double> a { 
      { 2, 1, 1, 0 },
      { 4, 3, 3, 1 },
@@ -11,6 +12,22 @@ int main()
   };
 
   nde::gaussElim(a);
+  */
+
+  nde::Matrix<double> a {
+    { 2, 1 },
+    { 5, 7 }
+  };
+
+  std::vector<double> b { 11, 13 };
+
+  std::vector<double> x0 { 1, 1 };
+
+  auto x = nde::jacobiIterate(a,b,x0, 0.00000000001);
+
+  for (auto && e : x ) std::cout << e << " ";
+  std::cout << "\n";
+
 
 
   /*
