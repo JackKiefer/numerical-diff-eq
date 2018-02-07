@@ -6,6 +6,8 @@
 #include <string>
 #include <exception>
 
+typedef unsigned long luint;
+
 namespace nde {
 
 template <typename T>
@@ -16,7 +18,7 @@ using Matrix = std::vector<nde::Vector<T>>;
 
 
 template <typename T>
-nde::Matrix<T> identityMatrix(unsigned int m)
+nde::Matrix<T> identityMatrix(luint m)
 {
   nde::Matrix<T> a(m, std::vector<T>(m, 0));
   for (auto i = 0u; i < m; ++i)
@@ -27,19 +29,19 @@ nde::Matrix<T> identityMatrix(unsigned int m)
 }
 
 template <typename T>
-nde::Matrix<T> nMatrix(int rows, int cols, T n)
+nde::Matrix<T> nMatrix(luint rows, luint cols, T n)
 {
   return nde::Matrix<T>(rows, std::vector<T>(cols, n));
 }
 
 template <typename T>
-nde::Matrix<T> zeroes(int rows, int cols)
+nde::Matrix<T> zeroes(luint rows, luint cols)
 {
   return nMatrix<T>(rows, cols, 0.0);
 }
 
 template <typename T>
-nde::Matrix<T> ones(int rows, int cols)
+nde::Matrix<T> ones(luint rows, luint cols)
 {
   return nMatrix<T>(rows, cols, 1.0);
 }
@@ -57,13 +59,13 @@ nde::Matrix<T> rowSwap(nde::Matrix<T> u, int rowa, int rowb, int colstart, int c
 }
 
 template <typename T>
-nde::Matrix<T> rowSwap(nde::Matrix<T> u, int rowa, int rowb)
+nde::Matrix<T> rowSwap(nde::Matrix<T> u, luint rowa, luint rowb)
 {
-  return rowSwap(u, rowa, rowb, 0, u[0].size() - 1);
+  return rowSwap(u, (int)rowa, (int)rowb, 0, (int)u[0].size() - 1);
 }
 
 template <typename T>
-nde::Matrix<T> rowScalarAdd(nde::Matrix<T> u, T scalar, int scalarRow, int addendRow)
+nde::Matrix<T> rowScalarAdd(nde::Matrix<T> u, T scalar, luint scalarRow, luint addendRow)
 {
   for (auto col = 0u; col < u[0].size(); ++col)
   {
@@ -73,7 +75,7 @@ nde::Matrix<T> rowScalarAdd(nde::Matrix<T> u, T scalar, int scalarRow, int adden
 }
 
 template <typename T>
-nde::Matrix<T> rowEliminate(nde::Matrix<T> u, int pivotRow, int pivotCol, int elimRow)
+nde::Matrix<T> rowEliminate(nde::Matrix<T> u, luint pivotRow, luint pivotCol, luint elimRow)
 {
   auto scalar = -u[elimRow][pivotCol] / u[pivotRow][pivotCol];
   return rowScalarAdd(u, scalar, pivotRow, elimRow);
@@ -155,7 +157,7 @@ ConstantMatrixOp(operator/, /)
 
 
 template <typename T>
-T componentMul(nde::Matrix<T> const & a, nde::Matrix<T> const & b, int i, int j)
+T componentMul(nde::Matrix<T> const & a, nde::Matrix<T> const & b, luint i, luint j)
 {
   T sum = 0;
   for (auto k = 0u; k < b.size(); ++k)

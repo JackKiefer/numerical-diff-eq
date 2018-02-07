@@ -11,8 +11,6 @@
 namespace nde
 {
 
-
-
 template <typename Time,
           typename Num,
           typename Param1,
@@ -94,7 +92,7 @@ auto secondFiniteDif(F const& y, T t)
 }
 
 template <typename T>
-auto colMax(nde::Matrix<T> u, unsigned int columnIndex)
+auto colMax(nde::Matrix<T> u, luint columnIndex)
 {
   std::vector<T> p(0);
   for (auto i = columnIndex; i < u.size(); ++i)
@@ -201,7 +199,7 @@ nde::Matrix<T> gaussElim(nde::Matrix<T> a, nde::Matrix<T> b)
   {
     auto pivotRow = nde::colMax(u, k + 1); 
     u = nde::rowSwap(u,pivotRow,k);
-    l = nde::rowSwap(l,k,pivotRow,0,k-1);
+    l = nde::rowSwap(l,(int)k,(int)pivotRow,0,(int)k-1);
     p = nde::rowSwap(p,pivotRow,k);
     for (auto elimRow = k + 1; elimRow <= m; ++elimRow)
     {
@@ -215,7 +213,7 @@ nde::Matrix<T> gaussElim(nde::Matrix<T> a, nde::Matrix<T> b)
 }
 
 template <typename T, typename Num>
-void fdcoeffV(int k, T xbar, nde::Matrix<Num> x)
+void fdcoeffV(luint k, T xbar, nde::Matrix<Num> x)
 {
   auto n = x.size();
   auto a = nde::ones(n,n);

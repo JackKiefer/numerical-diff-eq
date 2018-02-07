@@ -1,2 +1,2 @@
 make:
-	g++-7 -std=c++17 -g0 -Wall -Wextra main.cpp -o release
+	g++-7 -std=c++17 -g3 -Wall -Wextra -Wconversion main.cpp -o release
