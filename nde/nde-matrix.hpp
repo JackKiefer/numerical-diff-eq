@@ -57,6 +57,17 @@ nde::Matrix<T> rowEliminate(nde::Matrix<T> u, int pivotRow, int pivotCol, int el
   return rowScalarAdd(u, scalar, pivotRow, elimRow);
 }
 
+template <typename T>
+nde::Matrix<T> columnVector(std::vector<T> const & x)
+{
+  nde::Matrix<T> a;
+  for (auto && e : x)
+  {
+    a.push_back(std::vector<T>(1,e));
+  }
+  return a;
+}
+
 } // namespace nde
 
 #define EXCEPT_MATRIX_SIZE throw std::out_of_range("Matrix sizes must agree");

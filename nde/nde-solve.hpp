@@ -11,13 +11,7 @@
 namespace nde
 {
 
-template <typename Num, typename T>
-Num factorial(T n)
-{
-  std::vector<Num> v(n);
-  std::iota(v.begin(), v.end(), 1);
-  return std::accumulate(v.begin(), v.end(), 1, std::multiplies<Num>());
-}
+
 
 template <typename Time,
           typename Num,
@@ -70,7 +64,22 @@ std::function<Num(Time)> solcc(
   }
 }
 
-double const h_DIF = 0.00001;
+double const h_DIF = 0.0000001;
+
+template <typename F, typename Num, typename T, typename N>
+std::function<Num(T)> nthOrderFiniteDif(F const& f, N const & n)
+{
+  return (T x)[=]{
+    Num sum = 0.0;
+    Num sign = 1.0;
+    for (auto i = 0u; i <= n; ++i)
+    {
+      sum += sign * binomial(n,i) * f(x - (i*h_DIF));
+      sign *= -1.0;
+    }
+    return sum;
+  };
+}
 
 template <typename F, typename T>
 auto firstFiniteDif(F const& y, T t)
@@ -125,7 +134,40 @@ std::vector<T> jacobiIterate(nde::Matrix<T> a, std::vector<T> b, std::vector<T> 
 }
 
 template <typename T>
-void gaussElim(nde::Matrix<T> a)
+nde::Matrix<T> getY(nde::Matrix<T> b, nde::Matrix<T> l)
+{
+  nde::Matrix<T> y(b.size(), std::vector<T>(1, 0));
+
+  y[0][0] = b[0][0]/l[0][0];
+
+  for (auto m = 1u; m < y.size(); ++m)
+  {
+    auto sum = 0.0;
+    for (auto i = 0u; i < m; ++i)
+    {
+      sum += l[m][i]*y[i][0];
+    }
+    y[m][0] = (b[m][0] - sum)/l[m][m];
+  }
+  return y;
+}
+
+template <typename T>
+nde::Matrix<T> getX(nde::Matrix<T> y, nde::Matrix<T> u)
+{
+  std::reverse(y.begin(), y.end());
+  std::reverse(u.begin(), u.end());
+  for (auto && e : u)
+  {
+    std::reverse(e.begin(), e.end());
+  }
+  auto res = getY(y,u);
+  std::reverse(res.begin(), res.end());
+  return res;
+}
+
+template <typename T>
+nde::Matrix<T> gaussElim(nde::Matrix<T> a, nde::Matrix<T> b)
 {
   auto m = a.size() - 1; // Largest index
   auto u = a; 
@@ -144,13 +186,28 @@ void gaussElim(nde::Matrix<T> a)
       u = nde::rowEliminate(u, k, k, elimRow);
     }
   }
+  /*
 
   std::cout << "P: \n" << p << "\n";
   std::cout << "A: \n" << a << "\n";
   std::cout << "L: \n" << l << "\n";
   std::cout << "U: \n" << u << "\n";
+  std::cout << "b: \n" << b << "\n";
+  std::cout << "Pb: \n" << p * b << "\n";
+  */
 
-  std::cout << "LU: \n" << l * u << "\n";
+
+  /*
+  auto pi = p;
+  pi = nde::rowSwap(pi,1,2);
+  pi = nde::rowSwap(pi,0,1);
+  */
+  
+  auto y = getY(p * b, l);
+//  std::cout << "Y: \n" << y << "\n";
+
+  return getX(y,u);
+//  std::cout << "X: \n" << x << "\n";
 }
 
 } // namespace nde

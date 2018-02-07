@@ -45,6 +45,21 @@ bool allclose(std::vector<T> const & a, std::vector<T> const & b, T tolerance)
   return true;
 }
 
+template <typename Num, typename T>
+Num factorial(T n)
+{
+  std::vector<Num> v(n);
+  std::iota(v.begin(), v.end(), 1);
+  return std::accumulate(v.begin(), v.end(), 1, std::multiplies<Num>());
+}
+
+template <typename T>
+T binomial(T const & n, T const & k)
+{
+  return factorial(n)/(factorial(k)*factorial(n-k));
+}
+
+
 } // namespace nde
 
 
