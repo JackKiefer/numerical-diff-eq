@@ -9,7 +9,11 @@
 namespace nde {
 
 template <typename T>
-using Matrix = std::vector<std::vector<T>>;
+using Vector = std::vector<T>;
+
+template <typename T>
+using Matrix = std::vector<nde::Vector<T>>;
+
 
 template <typename T>
 nde::Matrix<T> identityMatrix(unsigned int m)
@@ -20,6 +24,24 @@ nde::Matrix<T> identityMatrix(unsigned int m)
     a[i][i] = 1;
   }
   return a;
+}
+
+template <typename T>
+nde::Matrix<T> nMatrix(int rows, int cols, T n)
+{
+  return nde::Matrix<T>(rows, std::vector<T>(cols, n));
+}
+
+template <typename T>
+nde::Matrix<T> zeroes(int rows, int cols)
+{
+  return nMatrix<T>(rows, cols, 0.0);
+}
+
+template <typename T>
+nde::Matrix<T> ones(int rows, int cols)
+{
+  return nMatrix<T>(rows, cols, 1.0);
 }
 
 template <typename T>
@@ -98,6 +120,39 @@ nde::Matrix<T> opname(nde::Matrix<T> const & a, nde::Matrix<T> const & b)\
 
 BinaryOp(operator+, +)
 BinaryOp(operator-, -)
+
+#define ConstantVectorOp(opname, OP)\
+template <typename T, typename U>\
+nde::Vector<T> opname(nde::Vector<T> a, U const & c)\
+{\
+  for (auto&& e : a)\
+  {\
+    e = e OP c;\
+  }\
+  return a;\
+}\
+
+ConstantVectorOp(operator*, *)
+ConstantVectorOp(operator+, +)
+ConstantVectorOp(operator-, -)
+ConstantVectorOp(operator/, /)
+
+#define ConstantMatrixOp(opname, OP)\
+template <typename T, typename U>\
+nde::Matrix<T> opname(nde::Matrix<T> a, U const & c)\
+{\
+  for (auto&& row : a)\
+  {\
+    row = row OP c;\
+  }\
+  return a;\
+}\
+
+ConstantMatrixOp(operator*, *)
+ConstantMatrixOp(operator+, +)
+ConstantMatrixOp(operator-, -)
+ConstantMatrixOp(operator/, /)
+
 
 template <typename T>
 T componentMul(nde::Matrix<T> const & a, nde::Matrix<T> const & b, int i, int j)

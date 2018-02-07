@@ -13,9 +13,6 @@ int main()
 
   std::cout << nde::gaussElim(a, b) << std::endl;
 
-  
-
-
 
   /*
   auto const y = nde::logistic<double>(2.0, 1.4, 2.0);

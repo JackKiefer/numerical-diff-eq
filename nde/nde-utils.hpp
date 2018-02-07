@@ -3,6 +3,9 @@
 
 #include <vector>
 #include <cmath>
+#include <numeric>
+#include <functional>
+#include <iterator>
 
 namespace nde
 {
@@ -46,17 +49,25 @@ bool allclose(std::vector<T> const & a, std::vector<T> const & b, T tolerance)
 }
 
 template <typename Num, typename T>
-Num factorial(T n)
+Num factorial(T const & n)
 {
   std::vector<Num> v(n);
   std::iota(v.begin(), v.end(), 1);
   return std::accumulate(v.begin(), v.end(), 1, std::multiplies<Num>());
 }
 
-template <typename T>
-T binomial(T const & n, T const & k)
+template <typename T, typename U>
+T binomial(T const & n, U const & k)
 {
-  return factorial(n)/(factorial(k)*factorial(n-k));
+  return factorial<T>(n)/(factorial<T>(k)*factorial<T>(n-k));
+}
+
+template <typename T, typename F>
+std::vector<T> map(F const & f, std::vector<T> v)
+{
+  std::vector<T> ret;
+  std::transform(v.begin(), v.end(), std::back_inserter(ret), f);
+  return ret;
 }
 
 

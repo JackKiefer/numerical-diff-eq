@@ -64,17 +64,17 @@ std::function<Num(Time)> solcc(
   }
 }
 
-double const h_DIF = 0.0000001;
+double const h_DIF = 0.000001;
 
-template <typename F, typename Num, typename T, typename N>
+template <typename Num, typename T, typename N, typename F>
 std::function<Num(T)> nthOrderFiniteDif(F const& f, N const & n)
 {
-  return (T x)[=]{
+  return [=](T x){
     Num sum = 0.0;
     Num sign = 1.0;
-    for (auto i = 0u; i <= n; ++i)
+    for (double i = 0.0; i <= n; ++i)
     {
-      sum += sign * binomial(n,i) * f(x - (i*h_DIF));
+      sum += sign * binomial(n,i) * f(x+(n/2 - 1)*h_DIF);
       sign *= -1.0;
     }
     return sum;
@@ -134,9 +134,9 @@ std::vector<T> jacobiIterate(nde::Matrix<T> a, std::vector<T> b, std::vector<T> 
 }
 
 template <typename T>
-nde::Matrix<T> getY(nde::Matrix<T> b, nde::Matrix<T> l)
+nde::Matrix<T> lowerTriagSub(nde::Matrix<T> b, nde::Matrix<T> l)
 {
-  nde::Matrix<T> y(b.size(), std::vector<T>(1, 0));
+  auto y = nde::zeroes<T>(b.size(), b[0].size());
 
   y[0][0] = b[0][0]/l[0][0];
 
@@ -153,7 +153,7 @@ nde::Matrix<T> getY(nde::Matrix<T> b, nde::Matrix<T> l)
 }
 
 template <typename T>
-nde::Matrix<T> getX(nde::Matrix<T> y, nde::Matrix<T> u)
+nde::Matrix<T> upperTriagSub(nde::Matrix<T> y, nde::Matrix<T> u)
 {
   std::reverse(y.begin(), y.end());
   std::reverse(u.begin(), u.end());
@@ -161,7 +161,7 @@ nde::Matrix<T> getX(nde::Matrix<T> y, nde::Matrix<T> u)
   {
     std::reverse(e.begin(), e.end());
   }
-  auto res = getY(y,u);
+  auto res = lowerTriagSub(y,u);
   std::reverse(res.begin(), res.end());
   return res;
 }
@@ -203,11 +203,27 @@ nde::Matrix<T> gaussElim(nde::Matrix<T> a, nde::Matrix<T> b)
   pi = nde::rowSwap(pi,0,1);
   */
   
-  auto y = getY(p * b, l);
+  auto y = lowerTriagSub(p * b, l);
 //  std::cout << "Y: \n" << y << "\n";
 
-  return getX(y,u);
+  return upperTriagSub(y,u);
 //  std::cout << "X: \n" << x << "\n";
+}
+
+template <typename T, typename Num>
+void fdcoeffV(int k, T xbar, nde::Matrix<Num> x)
+{
+  auto n = x.size();
+  auto a = nde::ones(n,n);
+  auto xrow = x - xbar;
+  for (auto i = 1u; i < n; ++i)
+  {
+    a[i] = nde::map([=](T t){ return std::pow(t,i-1)/nde::factorial<T>(i-1); }, xrow);
+  }
+  auto b = zeroes(n,1);
+  b[k+1] = b[k+1] + 1;
+
+  return nde::gaussElim(a,b);
 }
 
 } // namespace nde
