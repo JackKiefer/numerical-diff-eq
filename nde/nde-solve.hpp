@@ -134,7 +134,7 @@ std::vector<T> jacobiIterate(nde::Matrix<T> a, std::vector<T> b, std::vector<T> 
 }
 
 template <typename T>
-nde::Matrix<T> lowerTriagSub(nde::Matrix<T> b, nde::Matrix<T> l)
+nde::Matrix<T> forwardSub(nde::Matrix<T> b, nde::Matrix<T> l)
 {
   auto y = nde::zeroes<T>(b.size(), b[0].size());
 
@@ -153,7 +153,7 @@ nde::Matrix<T> lowerTriagSub(nde::Matrix<T> b, nde::Matrix<T> l)
 }
 
 template <typename T>
-nde::Matrix<T> upperTriagSub(nde::Matrix<T> y, nde::Matrix<T> u)
+nde::Matrix<T> backSub(nde::Matrix<T> y, nde::Matrix<T> u)
 {
   std::reverse(y.begin(), y.end());
   std::reverse(u.begin(), u.end());
@@ -161,9 +161,32 @@ nde::Matrix<T> upperTriagSub(nde::Matrix<T> y, nde::Matrix<T> u)
   {
     std::reverse(e.begin(), e.end());
   }
-  auto res = lowerTriagSub(y,u);
+  auto res = forwardSub(y,u);
   std::reverse(res.begin(), res.end());
   return res;
+}
+
+template <typename T>
+nde::Matrix<T> tridiagonalSolve(nde::Matrix<T> a, nde::Matrix<T> b)
+{
+  a[0][1] = a[0][1] / a[0][0];
+  for (auto i = 1u; i < a.size() - 1; ++i)
+  {
+    auto ai = a[i][i-1];
+    auto bi = a[i][i];
+    auto ci = a[i][i+1];
+    a[i][i+1] = ci/(bi-(ai*a[i-1][i]));
+  }
+
+  b[0][0] = b[0][0] / a[0][0];
+  for (auto i = 1u; i < b.size(); ++i)
+  {
+    auto ai = a[i][i-1];
+    auto bi = a[i][i];
+    auto ci1 = a[i-1][i];
+    b[i][0] = (b[i][0] - (ai*b[i-1][0]))/(bi - (ai*ci1));
+  }
+  return backSub(b, a); 
 }
 
 template <typename T>
@@ -186,28 +209,9 @@ nde::Matrix<T> gaussElim(nde::Matrix<T> a, nde::Matrix<T> b)
       u = nde::rowEliminate(u, k, k, elimRow);
     }
   }
-  /*
 
-  std::cout << "P: \n" << p << "\n";
-  std::cout << "A: \n" << a << "\n";
-  std::cout << "L: \n" << l << "\n";
-  std::cout << "U: \n" << u << "\n";
-  std::cout << "b: \n" << b << "\n";
-  std::cout << "Pb: \n" << p * b << "\n";
-  */
-
-
-  /*
-  auto pi = p;
-  pi = nde::rowSwap(pi,1,2);
-  pi = nde::rowSwap(pi,0,1);
-  */
-  
-  auto y = lowerTriagSub(p * b, l);
-//  std::cout << "Y: \n" << y << "\n";
-
-  return upperTriagSub(y,u);
-//  std::cout << "X: \n" << x << "\n";
+  auto y = forwardSub(p * b, l);
+  return backSub(y,u);
 }
 
 template <typename T, typename Num>
