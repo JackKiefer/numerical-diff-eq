@@ -6,6 +6,8 @@
 #include <numeric>
 #include <functional>
 #include <iterator>
+#include <iostream>
+#include "nde-functional.hpp"
 
 namespace nde
 {
@@ -62,12 +64,16 @@ T binomial(T const & n, U const & k)
   return factorial<T>(n)/(factorial<T>(k)*factorial<T>(n-k));
 }
 
-template <typename T, typename F>
-std::vector<T> map(F const & f, std::vector<T> v)
+template <typename T, typename P>
+T pNorm(std::vector<T> const & x, P const & p)
 {
-  std::vector<T> ret;
-  std::transform(v.begin(), v.end(), std::back_inserter(ret), f);
-  return ret;
+  return std::pow(nde::sum(nde::map( [=](T xi){return std::pow(std::abs(xi), p);}, x)), 1.0/p );
+}
+ 
+template <typename T>
+T infNorm(std::vector<T> const & v)
+{
+  return nde::max(nde::map([=](T t){return std::abs(t);}, v));
 }
 
 

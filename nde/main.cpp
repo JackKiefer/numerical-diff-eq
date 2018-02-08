@@ -12,6 +12,14 @@ int main()
   nde::Matrix<double> b { {3}, {0}, {17} };
 
   std::cout << nde::gaussElim(a, b) << std::endl;
+  
+  std::vector<double> v { 1, 2, 3, 4 };
+  std::cout << "Norm: \n";
+  std::cout << nde::pNorm(v, 2.0) << std::endl;
+
+  std::cout << "Inf norm: \n";
+  std::cout << nde::infNorm(v) << std::endl;
+
 
 
   /*
