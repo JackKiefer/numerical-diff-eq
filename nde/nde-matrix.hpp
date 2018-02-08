@@ -47,6 +47,23 @@ nde::Matrix<T> ones(luint rows, luint cols)
 }
 
 template <typename T>
+nde::Matrix<T> tridiagonal(luint n, T subdiag, T diag, T superdiag)
+{
+  auto a = zeroes<T>(n,n);
+  a[0][0] = diag;
+  a[0][1] = superdiag;
+  for (auto i = 1u; i < n - 1; ++i)
+  {
+    a[i][i-1] = subdiag;
+    a[i][i]   = diag;
+    a[i][i+1] = superdiag;
+  }
+  a[n-1][n-1] = diag;
+  a[n-1][n-2] = subdiag;
+  return a;
+}
+
+template <typename T>
 nde::Matrix<T> rowSwap(nde::Matrix<T> u, int rowa, int rowb, int colstart, int colend)
 {
   auto temp = u[rowa];
