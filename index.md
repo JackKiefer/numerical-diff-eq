@@ -17,3 +17,4 @@ You're a beautiful human being!
 # Table of Contents
 ## [I. Utilities](docs/utilities.md)
 ## [II. Differential equations](docs/diffeq.md)
+## [II. Linear Algebra](docs/linear.md)

@@ -13,9 +13,7 @@ int main()
 
   std::cout << nde::gaussElim(a, b) << std::endl;
 
-  std::cout << "\n" << nde::tridiagonal(4, 1.0, -2.0, 1.0) << std::endl;
-  
-
+  auto u =  nde::tridiagonal(3, 1.0, -2.0, 1.0);
 
 
   /*

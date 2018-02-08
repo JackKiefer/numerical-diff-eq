@@ -164,6 +164,8 @@ nde::Matrix<T> backSub(nde::Matrix<T> y, nde::Matrix<T> u)
   return res;
 }
 
+#define thomasSolve tridiagonalSolve
+
 template <typename T>
 nde::Matrix<T> tridiagonalSolve(nde::Matrix<T> a, nde::Matrix<T> b)
 {
@@ -213,7 +215,7 @@ nde::Matrix<T> gaussElim(nde::Matrix<T> a, nde::Matrix<T> b)
 }
 
 template <typename T, typename Num>
-void fdcoeffV(luint k, T xbar, nde::Matrix<Num> x)
+nde::Matrix<Num> fdcoeffV(luint k, T xbar, nde::Matrix<Num> x)
 {
   auto n = x.size();
   auto a = nde::ones(n,n);
@@ -226,6 +228,21 @@ void fdcoeffV(luint k, T xbar, nde::Matrix<Num> x)
   b[k+1] = b[k+1] + 1;
 
   return nde::gaussElim(a,b);
+}
+
+template <typename T, typename F>
+nde::Matrix<T> elliptic(F const & f, T a, T b, T ua, T ub)
+{
+  auto n = b - a + 1;
+  auto v = nde::zeroes(n,1);
+
+  v[0][0] = f(a) - ua;
+  for (auto i = 1u; i < n - 1; ++i)
+  {
+    v[i][0] = h_DIF * h_DIF * f(a + i);
+  }
+  v[n - 1][0] = f(b) - ub;
+  return nde::thomasSolve(nde::tridiagonal(n, 1.0, -2.0, 1.0), v);
 }
 
 } // namespace nde
