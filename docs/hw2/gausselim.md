@@ -1,3 +1,11 @@
+---
+math: true
+layout: default
+---
+
+{% include mathjax.html %}
+
+
 # Gaussian Elimination via LU factorization
 
 *Routine Name:* ``gaussElim``

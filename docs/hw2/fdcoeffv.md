@@ -1,3 +1,11 @@
+---
+math: true
+layout: default
+---
+
+{% include mathjax.html %}
+
+
 # fdcoeffV
 
 *Routine Name:* fdcoeffV

@@ -1,3 +1,10 @@
+---
+math: true
+layout: default
+---
+
+{% include mathjax.html %}
+
 # Elliptic ODE
 
 *Routine Name:* ``elliptic``

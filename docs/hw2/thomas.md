@@ -1,3 +1,11 @@
+---
+math: true
+layout: default
+---
+
+{% include mathjax.html %}
+
+
 # Thomas algorithm
 
 *Routine Name:* thomasSolve
