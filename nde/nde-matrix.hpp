@@ -94,22 +94,22 @@ nde::Matrix<T> columnVector(std::vector<T> const & x)
 
 } // namespace nde
 
-#define EXCEPT_MATRIX_SIZE throw std::out_of_range("Matrix sizes must agree");
+#define EXCEPT_SIZE(type) throw std::out_of_range("type sizes must agree");
 
-#define BinaryOp(opname, OP)\
+#define BinaryMatrixOp(OP)\
 template <typename T>\
-nde::Matrix<T> opname(nde::Matrix<T> const & a, nde::Matrix<T> const & b)\
+nde::Matrix<T> operator OP (nde::Matrix<T> const & a, nde::Matrix<T> const & b)\
 {\
   if (a.size() != b.size())\
   {\
-      EXCEPT_MATRIX_SIZE\
+      EXCEPT_SIZE(Matrix)\
   }\
   nde::Matrix<T> c(a.size(), std::vector<T>(a[0].size()));\
   for (auto i = 0u; i < a.size(); ++i)\
   {\
     if (a[i].size() != b[i].size())\
     {\
-      EXCEPT_MATRIX_SIZE\
+      EXCEPT_SIZE(Matrix)\
     }\
     for (auto j = 0u; j < a[i].size(); ++j)\
     {\
@@ -120,12 +120,30 @@ nde::Matrix<T> opname(nde::Matrix<T> const & a, nde::Matrix<T> const & b)\
   return c;\
 }\
 
-BinaryOp(operator+, +)
-BinaryOp(operator-, -)
+BinaryMatrixOp(+)
+BinaryMatrixOp(-)
 
-#define ConstantVectorOp(opname, OP)\
+#define BinaryVectorOp(OP)\
+template <typename T>\
+nde::Vector<T> operator OP (nde::Vector<T> a, nde::Vector<T> const & b)\
+{\
+  if (a.size() != b.size())\
+  {\
+    EXCEPT_SIZE(Vector)\
+  }\
+  for (auto i = 0u; i < a.size(); ++i)\
+  {\
+    a[i] = a[i] OP b[i];\
+  }\
+  return a;\
+}\
+
+BinaryVectorOp(+)
+BinaryVectorOp(-)
+
+#define ConstantVectorOp(OP)\
 template <typename T, typename U>\
-nde::Vector<T> opname(nde::Vector<T> a, U const & c)\
+nde::Vector<T> operator OP (nde::Vector<T> a, U const & c)\
 {\
   for (auto&& e : a)\
   {\
@@ -134,14 +152,14 @@ nde::Vector<T> opname(nde::Vector<T> a, U const & c)\
   return a;\
 }\
 
-ConstantVectorOp(operator*, *)
-ConstantVectorOp(operator+, +)
-ConstantVectorOp(operator-, -)
-ConstantVectorOp(operator/, /)
+ConstantVectorOp(*)
+ConstantVectorOp(+)
+ConstantVectorOp(-)
+ConstantVectorOp(/)
 
-#define ConstantMatrixOp(opname, OP)\
+#define ConstantMatrixOp(OP)\
 template <typename T, typename U>\
-nde::Matrix<T> opname(nde::Matrix<T> a, U const & c)\
+nde::Matrix<T> operator OP (nde::Matrix<T> a, U const & c)\
 {\
   for (auto&& row : a)\
   {\
@@ -150,10 +168,10 @@ nde::Matrix<T> opname(nde::Matrix<T> a, U const & c)\
   return a;\
 }\
 
-ConstantMatrixOp(operator*, *)
-ConstantMatrixOp(operator+, +)
-ConstantMatrixOp(operator-, -)
-ConstantMatrixOp(operator/, /)
+ConstantMatrixOp(*)
+ConstantMatrixOp(+)
+ConstantMatrixOp(-)
+ConstantMatrixOp(/)
 
 
 template <typename T>
@@ -176,7 +194,7 @@ nde::Matrix<T> operator*(nde::Matrix<T> const & a, nde::Matrix<T> const & b)
 
   if (m != b.size())
   {
-    EXCEPT_MATRIX_SIZE
+    EXCEPT_SIZE(Matrix)
   }
 
   nde::Matrix<T> c(n, std::vector<T>(p));
@@ -196,15 +214,29 @@ std::ostream& operator<<(std::ostream& o, nde::Matrix<T> const & m)
 {
   for (auto i = 0u; i < m.size(); ++i)
   {
+    o << "| ";
     for (auto j = 0u; j < m[i].size(); ++j)
     {
       o << std::setw(11) << std::setprecision(4) << (m[i][j]);
     }
+    o << " |";
     if (i < m.size() - 1)
     {
       o << std::endl;
     }
   }
+  return o;
+}
+
+template <typename T>
+std::ostream& operator<<(std::ostream& o, nde::Vector<T> const & v)
+{
+  o << "[ ";
+  for (auto&& e : v)
+  {
+    o << std::setw(11) << std::setprecision(4) << e;
+  }
+  o << " ] \n";
   return o;
 }
 

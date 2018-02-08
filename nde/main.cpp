@@ -14,11 +14,14 @@ int main()
   std::cout << nde::gaussElim(a, b) << std::endl;
   
   std::vector<double> v { 1, 2, 3, 4 };
+  std::vector<double> u { 1, 2, 3, 4 };
   std::cout << "Norm: \n";
   std::cout << nde::pNorm(v, 2.0) << std::endl;
 
   std::cout << "Inf norm: \n";
   std::cout << nde::infNorm(v) << std::endl;
+
+  std::cout << "Plus \n" << v + u << std::endl;
 
 
 

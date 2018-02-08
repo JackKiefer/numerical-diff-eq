@@ -73,7 +73,7 @@ T pNorm(std::vector<T> const & x, P const & p)
 template <typename T>
 T infNorm(std::vector<T> const & v)
 {
-  return nde::max(nde::map([=](T t){return std::abs(t);}, v));
+  return nde::max(nde::map(farg(std::abs), v));
 }
 
 

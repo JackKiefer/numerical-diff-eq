@@ -2,6 +2,8 @@
 #define NDE_FUNCTIONAL
 #include <vector>
 
+#define farg(x) [=](T t){ return x(t); }
+
 namespace nde {
 
 template <typename T, typename F>
