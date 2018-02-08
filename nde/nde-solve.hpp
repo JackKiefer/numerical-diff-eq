@@ -245,6 +245,23 @@ nde::Matrix<T> elliptic(F const & f, T a, T b, T ua, T ub)
   return nde::thomasSolve(nde::tridiagonal(n, 1.0, -2.0, 1.0), v);
 }
 
+template <typename T, typename F>
+nde::Matrix<T> ellipticKx(F const & f, T a, T b, T ua)
+{
+  auto k = nde::map([=](T t){ return rand(10,50); }, std::vector<T>(10,0)); 
+  auto v = nde::zeroes<T>(n,1);
+
+  v[0][0] = f(a) - ua;
+  for (auto i = 1u; i < n - 1; ++i)
+  {
+    v[i][0] = h_DIF * h_DIF * f(a + i) * k[i];
+  }
+  v[n - 1][0] = f(b) - ub;
+  return nde::thomasSolve(nde::tridiagonal(n, 1.0, -2.0, 1.0), v);
+}
+
+
+
 } // namespace nde
 
 #endif
