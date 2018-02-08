@@ -8,8 +8,6 @@
 
 ### maceps
 
-Calculates machine epsilon.
-
 **Definition:**
 {% highlight C++ %}
 double maceps()

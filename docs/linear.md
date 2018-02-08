@@ -56,7 +56,7 @@ Returns a ``nde::Matrix<T>`` that is the solution vector.
 
 ### jacobiIterate
 
-Uses Jacobi Iteration to solve a diagonally dominant linear system of equations. 
+Uses Jacobi Iteration to solve a diagonally dominant linear system of equations \\(Ax = b \\)
 
 #### Definition
 
@@ -69,18 +69,8 @@ std::vector<T> jacobiIterate(nde::Matrix<T> a, std::vector<T> b, std::vector<T> 
 
 #### Parameters
 
-* ``a`` - Specifies coefficients for the _k_th-order derivative
-* ``xbar`` - The point to evaluate at
-* ``x`` - A row vector (_n_ x 1 matrix) of stencil points
-
-#### Example
-
-{% highlight C++ %}
-/* Generate a row vector of stencil points */
-nde::Matrix<double> stencils { { 0, 1, 2, 3, 4 } };
-
-/* Calculate the coefficients */
-auto coeffs = nde::fdcoeffV(2, 1.0, stencils);
-{% endhighlight %}
-
+* ``a`` - The matrix \\(A\\)
+* ``b`` - The column vector \\(b\\)
+* ``x`` - Initial guesses for the solutions \\(x\\)
+* ``tolerance`` - An acceptable error tolerance
 
