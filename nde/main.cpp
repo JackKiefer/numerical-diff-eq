@@ -3,17 +3,9 @@
 
 int main()
 {
-  nde::Matrix<double> a { 
-    { 1, 1, 1 },
-    { 2, 3, 7 },
-    { 1, 3, -2}
-  };
-
-  nde::Matrix<double> b { {3}, {0}, {17} };
-
-  std::cout << nde::gaussElim(a, b) << std::endl;
-
-  auto u =  nde::tridiagonal(3, 1.0, -2.0, 1.0);
+  auto a = nde::tridiagonal(4, -1.0, 2.0, -1.0);
+  nde::Matrix<double> b { {1},{2},{3},{4} };
+  std::cout << nde::thomasSolve(a, b) << std::endl;
 
 
   /*

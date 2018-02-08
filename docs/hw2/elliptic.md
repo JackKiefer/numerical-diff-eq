@@ -1,6 +1,9 @@
 # Elliptic ODE
+
 *Routine Name:* ``elliptic``
+
 *Author:* Jack Kiefer
+
 *Language:* C++
 
 ## Description
@@ -55,3 +58,8 @@ auto solutions = nde::elliptic(
 {% endhighlight %}
 
 ## Result
+
+```
+|     -0.1042 |
+|      -2.083 |
+```

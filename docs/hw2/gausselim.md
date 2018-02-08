@@ -1,6 +1,9 @@
 # Gaussian Elimination via LU factorization
+
 *Routine Name:* ``gaussElim``
+
 *Author:* Jack Kiefer
+
 *Language:* C++
 
 ## Description
@@ -46,5 +49,22 @@ nde::Matrix<T> gaussElim(nde::Matrix<T> a, nde::Matrix<T> b)
 {% endhighlight %}
 
 ## Example
+{% highlight C++ %}
+nde::Matrix<double> a {
+  {  2,  1, -1 },
+  { -3, -1,  2 },
+  { -2,  1,  2 }
+};
+
+nde::Matrix<double> b { {8}, {-11}, {3} };
+
+std::cout << nde::gaussElim(a, b) << std::endl;
+{% endhighlight %}
 
 ## Result
+```
+|           2 |
+|           3 |
+|          -1 |
+
+```

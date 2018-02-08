@@ -1,6 +1,9 @@
 # Thomas algorithm
+
 *Routine Name:* thomasSolve
+
 *Author:* Jack Kiefer
+
 *Language:* C++
 
 ## Description
@@ -46,4 +49,16 @@ nde::Matrix<T> thomasSolve(nde::Matrix<T> a, nde::Matrix<T> b)
 
 ## Example
 
+{% highlight C++ %}
+auto a = nde::tridiagonal(4, -1.0, 2.0, -1.0);
+nde::Matrix<double> b { {1},{2},{3},{4} };
+std::cout << nde::thomasSolve(a, b) << std::endl;
+{% endhighlight %}
+
 ## Result
+```
+|      0.6979 |
+|       1.792 |
+|       2.875 |
+|           3 |
+```

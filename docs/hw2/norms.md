@@ -1,6 +1,9 @@
 # Vector Norms
+
 *Routine Name:* pNorm, infNorm
+
 *Author:* Jack Kiefer
+
 *Language:* C++
 
 ## Description
@@ -10,6 +13,7 @@ Compute the p-norm or the infinity norm of a given vector.
 ## Input
 
 The vector `v`.
+If p-norm, the _p_th norm as well.
 
 ## Output 
 
@@ -33,5 +37,16 @@ T infNorm(std::vector<T> const & v)
 
 
 ## Example
+{% highlight C++ %}
+std::vector<double> v { 1, 2, 3, 4 };
+std::cout << "2-norm: \n" << nde::pNorm(v, 2) << std::endl;
+std::cout << "infinity norm: \n" << nde::infNorm(v) << std::endl;
+{% endhighlight %}
 
 ## Result
+```
+2-norm: 
+5.47723
+infinity norm: 
+4
+```

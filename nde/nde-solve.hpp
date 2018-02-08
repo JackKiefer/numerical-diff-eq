@@ -218,13 +218,13 @@ template <typename T, typename Num>
 nde::Matrix<Num> fdcoeffV(luint k, T xbar, nde::Matrix<Num> x)
 {
   auto n = x.size();
-  auto a = nde::ones(n,n);
+  auto a = nde::ones<T>(n,n);
   auto xrow = x - xbar;
   for (auto i = 1u; i < n; ++i)
   {
-    a[i] = nde::map([=](T t){ return std::pow(t,i-1)/nde::factorial<T>(i-1); }, xrow);
+    a[i] = nde::map([=](T t){ return std::pow(t,i-1)/nde::factorial<T>(i-1); }, xrow)[0];
   }
-  auto b = zeroes(n,1);
+  auto b = zeroes<T>(n,1);
   b[k+1] = b[k+1] + 1;
 
   return nde::gaussElim(a,b);
@@ -234,7 +234,7 @@ template <typename T, typename F>
 nde::Matrix<T> elliptic(F const & f, T a, T b, T ua, T ub)
 {
   auto n = b - a + 1;
-  auto v = nde::zeroes(n,1);
+  auto v = nde::zeroes<T>(n,1);
 
   v[0][0] = f(a) - ua;
   for (auto i = 1u; i < n - 1; ++i)

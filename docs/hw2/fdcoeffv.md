@@ -1,6 +1,9 @@
 # fdcoeffV
+
 *Routine Name:* fdcoeffV
+
 *Author:* Jack Kiefer
+
 *Language:* C++
 
 ## Description
@@ -48,3 +51,6 @@ auto coeffs = nde::fdcoeffV(2, 1.0, stencils);
 {% endhighlight %}
 
 ## Result
+```
+|       1        -2       1 |
+```
