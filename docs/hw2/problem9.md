@@ -54,7 +54,7 @@ nde::Matrix<T> ellipticKx(F const & f, T a, T b, T ua)
 
 {% highlight C++ %}
 auto const PI = 3.14159;
-auto solutions = nde::elliptic(
+auto solutions = nde::elliptickx(
          /* f  */  [=](double x) { return std::sin(PI*x); },
          /* a  */  0.0,
          /* b  */  1.0,
