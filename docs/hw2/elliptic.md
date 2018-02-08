@@ -18,12 +18,28 @@ for an arbitray user-defined \\( f(x) \\) on the interval \\( \[a, b\] \\) with 
 * ``ua`` - The known condition \\(u(a)\\)
 * ``ub`` - The known condition \\(u(b)\\)
 
-
 ## Output 
 
 Returns a row vector of the solutions.
 
 ## Code
+
+{% highlight C++ %}
+template <typename T, typename F>
+nde::Matrix<T> elliptic(F const & f, T a, T b, T ua, T ub)
+{
+  auto n = b - a + 1;
+  auto v = nde::zeroes(n,1);
+
+  v[0][0] = f(a) - ua;
+  for (auto i = 1u; i < n - 1; ++i)
+  {
+    v[i][0] = h_DIF * h_DIF * f(a + i);
+  }
+  v[n - 1][0] = f(b) - ub;
+  return nde::thomasSolve(nde::tridiagonal(n, 1.0, -2.0, 1.0), v);
+}
+{% endhighlight %}
 
 ## Example
 

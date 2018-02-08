@@ -19,6 +19,24 @@ Returns a row vector of coefficients.
 
 ## Code
 
+{% highlight C++ %}
+template <typename T, typename Num>
+nde::Matrix<Num> fdcoeffV(luint k, T xbar, nde::Matrix<Num> x)
+{
+  auto n = x.size();
+  auto a = nde::ones(n,n);
+  auto xrow = x - xbar;
+  for (auto i = 1u; i < n; ++i)
+  {
+    a[i] = nde::map([=](T t){ return std::pow(t,i-1)/nde::factorial<T>(i-1); }, xrow);
+  }
+  auto b = zeroes(n,1);
+  b[k+1] = b[k+1] + 1;
+
+  return nde::gaussElim(a,b);
+}
+{% endhighlight %}
+
 ## Example
 
 {% highlight C++ %}

@@ -12,6 +12,11 @@
 
 ## Code
 
+{% highlight C++ %}
+
+{% endhighlight %}
+
+
 ## Example
 
 ## Result
