@@ -6,9 +6,9 @@ layout: default
 {% include mathjax.html %}
 
 
-# Name
+# Elliptic ODE with k(x)
 
-*Routine Name:* Elliptic ODE with k(x)
+*Routine Name:* elliptickx
 
 *Author:* Jack Kiefer
 
