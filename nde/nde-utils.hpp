@@ -7,74 +7,40 @@
 #include <functional>
 #include <iterator>
 #include <iostream>
+#include <random>
+#include <climits>
+#include "nde-solve.hpp"
+#include "nde-matrix.hpp"
 #include "nde-functional.hpp"
 
 namespace nde
 {
 
-double maceps()
-{
-  typedef union {
-    long long ll;
-    double d;
-  } data;
-
-  data s;
-  s.d = 1.0;
-  s.ll++;
-  return s.d - 1.0;
-}
+double maceps();
 
 template <typename T>
-T absoluteError(T const& expectedVal, T const& measuredVal)
-{
-  return expectedVal - measuredVal;
-}
+T getRand(T s, T e);
 
 template <typename T>
-T relativeError(T const& expectedVal, T const& measuredVal)
-{
-  return absoluteError(expectedVal, measuredVal) / expectedVal;
-}
+T absoluteError(T const& expectedVal, T const& measuredVal);
 
 template <typename T>
-bool allclose(std::vector<T> const & a, std::vector<T> const & b, T tolerance)
-{
-  for (auto i = 0u; i < a.size(); ++i)
-  {
-    if (std::abs(a[i]-b[i]) > tolerance)
-    {
-      return false;
-    }
-  }
-  return true;
-}
+T relativeError(T const& expectedVal, T const& measuredVal);
+
+template <typename T>
+bool allclose(std::vector<T> const & a, std::vector<T> const & b, T tolerance);
 
 template <typename Num, typename T>
-Num factorial(T const & n)
-{
-  std::vector<Num> v(n);
-  std::iota(v.begin(), v.end(), 1);
-  return std::accumulate(v.begin(), v.end(), 1, std::multiplies<Num>());
-}
+Num factorial(T const & n);
 
 template <typename T, typename U>
-T binomial(T const & n, U const & k)
-{
-  return factorial<T>(n)/(factorial<T>(k)*factorial<T>(n-k));
-}
+T binomial(T const & n, U const & k);
 
 template <typename T, typename P>
-T pNorm(std::vector<T> const & x, P const & p)
-{
-  return std::pow(nde::sum(nde::map( [=](T xi){return std::pow(std::abs(xi), p);}, x)), 1.0/p );
-}
+T pNorm(std::vector<T> const & x, P const & p);
  
 template <typename T>
-T infNorm(std::vector<T> const & v)
-{
-  return nde::max(nde::map(farg(std::abs), v));
-}
+T infNorm(std::vector<T> const & v);
 
 
 } // namespace nde
