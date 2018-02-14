@@ -76,13 +76,8 @@ nde::Matrix<T> elliptic(F const & f, T a, T b, T ua, T ub);
 template <typename T, typename F>
 nde::Matrix<T> ellipticKx(F const & f, T a, T b, T ua, T ub);
 
-/*
 template <typename T>
-T powerIterate(nde::Matrix<T> a, luint const & MAX_ITERS)
-{
-
-}
-*/
+T powerIterate(nde::Matrix<T> a, luint const & MAX_ITERS);
 
 } // namespace nde
 

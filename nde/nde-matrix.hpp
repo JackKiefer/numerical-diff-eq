@@ -33,7 +33,7 @@ template <typename T>
 nde::Matrix<T> ones(luint rows, luint cols);
 
 template <typename T>
-nde::Matrix<T> randMatrix(luint rows, luint cols);
+nde::Matrix<T> randMatrix(luint, luint, int, int);
 
 template <typename T>
 nde::Matrix<T> hilbert(luint size);
@@ -56,8 +56,17 @@ nde::Matrix<T> rowEliminate(nde::Matrix<T> u, luint pivotRow, luint pivotCol, lu
 template <typename T>
 nde::Matrix<T> columnVector(std::vector<T> const & x);
 
+template <typename T>
+nde::Vector<T> rowVector(nde::Matrix<T> a);
+
 template <typename T, typename F>
 nde::Matrix<T> matrixMap(F const & f, nde::Matrix<T> m);
+
+template <typename T>
+T matrixInfNorm(nde::Matrix<T> a);
+
+template <typename T>
+T matrix1Norm(nde::Matrix<T> a);
 
 } // namespace nde
 #endif

@@ -50,12 +50,9 @@ nde::Matrix<T> ones(luint rows, luint cols)
 }
 
 template <typename T>
-T getRand(T s, T e);
-
-template <typename T>
-nde::Matrix<T> randMatrix(luint rows, luint cols)
+nde::Matrix<T> randMatrix(luint rows, luint cols, int b, int e)
 {
-  return nMatrix<T>(rows, cols, getRand<T>(T(0),T(50)));
+  return nMatrix<T>(rows, cols, getRand<int>(b,e));
 }
 
 template <typename T>
@@ -127,6 +124,18 @@ nde::Matrix<T> columnVector(std::vector<T> const & x)
   return a;
 }
 
+template <typename T>
+nde::Vector<T> rowVector(nde::Matrix<T> a)
+{
+  nde::Vector<T> v;
+  v.reserve(a.size());
+  for (auto && e : a)
+  {
+    v.push_back(e[0]);
+  }
+  return v;
+}
+
 template <typename T, typename F>
 nde::Matrix<T> matrixMap(F const & f, nde::Matrix<T> m)
 {
@@ -138,6 +147,42 @@ nde::Matrix<T> matrixMap(F const & f, nde::Matrix<T> m)
     }
   }
   return m;
+}
+
+template <typename T>
+T matrixInfNorm(nde::Matrix<T> a)
+{
+  T maxSum = 0.0;
+  for (auto && row : a)
+  {
+    T rowSum = nde::pNorm(row,1);
+    if (rowSum > maxSum)
+    {
+      maxSum = rowSum;
+    }
+  }
+  return maxSum;
+}
+
+template <typename T>
+T matrix1Norm(nde::Matrix<T> a)
+{
+  T maxSum = 0.0;
+  /* For each column */
+  for (auto j = 0u; j < a[0].size(); ++j)
+  {
+    T colSum = 0.0;
+    /* For each entry in column */
+    for (auto i = 0u; i < a.size(); ++i)
+    {
+      colSum += a[i][j];
+    }
+    if (colSum > maxSum)
+    {
+      maxSum = colSum;
+    }
+  }
+  return maxSum;
 }
 
 } // namespace nde
@@ -170,6 +215,7 @@ nde::Matrix<T> operator OP (nde::Matrix<T> const & a, nde::Matrix<T> const & b)\
 
 BinaryMatrixOp(+)
 BinaryMatrixOp(-)
+BinaryMatrixOp(/)
 
 #define BinaryVectorOp(OP)\
 template <typename T>\
@@ -225,10 +271,10 @@ ConstantMatrixOp(/)
 template <typename T>
 T componentMul(nde::Matrix<T> const & a, nde::Matrix<T> const & b, luint i, luint j)
 {
-  T sum = 0;
+  T sum = 0.0;
   for (auto k = 0u; k < b.size(); ++k)
   {
-    sum += a[i][k] * b[k][j]; 
+    sum += (a[i][k] * b[k][j]); 
   }
   return sum;
 }
@@ -245,11 +291,11 @@ nde::Matrix<T> operator*(nde::Matrix<T> const & a, nde::Matrix<T> const & b)
     EXCEPT_SIZE(Matrix)
   }
 
-  nde::Matrix<T> c(n, std::vector<T>(p));
+  auto c = nde::zeroes<T>(n,p);
 
   for (auto i = 0u; i < n; ++i)
   {
-    for (auto j = 0u; j < m; ++j)
+    for (auto j = 0u; j < p; ++j)
     {
       c[i][j] = componentMul(a, b, i, j);
     }

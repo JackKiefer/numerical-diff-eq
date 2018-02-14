@@ -262,13 +262,19 @@ nde::Matrix<T> ellipticKx(F const & f, T a, T b, T ua, T ub)
   return nde::thomasSolve(nde::tridiagonal(n, 1.0, -2.0, 1.0), v);
 }
 
-/*
 template <typename T>
 T powerIterate(nde::Matrix<T> a, luint const & MAX_ITERS)
 {
-
+  auto b_k = nde::randMatrix<T>(a[0].size(), 1, 2, 50);
+  for (auto i = 0u; i < MAX_ITERS; ++i)
+  {
+    auto b_k1 = a * b_k;
+    auto b_k1_norm = nde::pNorm(nde::rowVector(b_k1), 2);
+    b_k = b_k1 / b_k1_norm;
+  }
+  nde::Matrix<T> transpose { nde::rowVector(b_k) };
+  return ((transpose*(a*b_k))/(transpose*b_k))[0][0];
 }
-*/
 
 } // namespace nde
 
