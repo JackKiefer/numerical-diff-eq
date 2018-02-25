@@ -185,6 +185,13 @@ T matrix1Norm(nde::Matrix<T> a)
   return maxSum;
 }
 
+template <typename T>
+nde::Matrix<T> inverse(nde::Matrix<T> a)
+{
+  auto res = nde::gaussElim(a,nde::identityMatrix<T>(a.size()));
+  return (res);
+}
+
 } // namespace nde
 
 #define EXCEPT_SIZE(type) throw std::out_of_range("type sizes must agree");

@@ -137,16 +137,19 @@ nde::Matrix<T> forwardSub(nde::Matrix<T> b, nde::Matrix<T> l)
 {
   auto y = nde::zeroes<T>(b.size(), b[0].size());
 
-  y[0][0] = b[0][0]/l[0][0];
-
-  for (auto m = 1u; m < y.size(); ++m)
+  for (auto bcol = 0u; bcol < b[0].size(); ++bcol)
   {
-    auto sum = 0.0;
-    for (auto i = 0u; i < m; ++i)
+    y[0][bcol] = b[0][bcol]/l[0][0];
+
+    for (auto m = 1u; m < y.size(); ++m)
     {
-      sum += l[m][i]*y[i][0];
+      auto sum = 0.0;
+      for (auto i = 0u; i < m; ++i)
+      {
+        sum += l[m][i]*y[i][bcol];
+      }
+      y[m][bcol] = (b[m][bcol] - sum)/l[m][m];
     }
-    y[m][0] = (b[m][0] - sum)/l[m][m];
   }
   return y;
 }
@@ -160,6 +163,12 @@ nde::Matrix<T> backSub(nde::Matrix<T> y, nde::Matrix<T> u)
   {
     std::reverse(e.begin(), e.end());
   }
+  /*
+  for (auto && e : y)
+  {
+    std::reverse(e.begin(), e.end());
+  }
+  */
   auto res = forwardSub(y,u);
   std::reverse(res.begin(), res.end());
   return res;
@@ -195,7 +204,7 @@ nde::Matrix<T> gaussElim(nde::Matrix<T> a, nde::Matrix<T> b)
 {
   auto m = a.size() - 1; // Largest index
   auto u = a; 
-  auto l = nde::identityMatrix<T>(m + 1);
+  auto l = nde::identityMatrix<T>(a.size());
   auto p = l;
 
   for (auto k = 0u; k <= m - 1; ++k)
@@ -203,6 +212,7 @@ nde::Matrix<T> gaussElim(nde::Matrix<T> a, nde::Matrix<T> b)
     auto pivotRow = nde::colMax(u, k + 1); 
     u = nde::rowSwap(u,pivotRow,k);
     l = nde::rowSwap(l,(int)k,(int)pivotRow,0,(int)k-1);
+    quickprint(l)
     p = nde::rowSwap(p,pivotRow,k);
     for (auto elimRow = k + 1; elimRow <= m; ++elimRow)
     {
@@ -274,6 +284,23 @@ T powerIterate(nde::Matrix<T> a, luint const & MAX_ITERS)
   }
   nde::Matrix<T> transpose { nde::rowVector(b_k) };
   return ((transpose*(a*b_k))/(transpose*b_k))[0][0];
+}
+
+template <typename T>
+T inverseIterate(nde::Matrix<T> a, luint const & MAX_ITERS)
+{
+  T mu = nde::getRand(2,50);
+  auto b_k = nde::randMatrix<T>(a.size(), 1, 2, 50);
+  auto moda = nde::inverse(a - (nde::identityMatrix<T>(a.size()) * mu));
+  for (auto i = 0u; i < MAX_ITERS; ++i)
+  {
+    auto mb = moda*b_k;
+    auto c_k = nde::pNorm(nde::rowVector(mb),2);
+    b_k = mb/c_k;
+  }
+  std::cout << b_k << std::endl;
+
+  return 0;
 }
 
 } // namespace nde

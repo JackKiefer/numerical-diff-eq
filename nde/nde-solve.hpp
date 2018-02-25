@@ -79,6 +79,10 @@ nde::Matrix<T> ellipticKx(F const & f, T a, T b, T ua, T ub);
 template <typename T>
 T powerIterate(nde::Matrix<T> a, luint const & MAX_ITERS);
 
+template <typename T>
+T inverseIterate(nde::Matrix<T> a, luint const & MAX_ITERS);
+
+
 } // namespace nde
 
 #endif

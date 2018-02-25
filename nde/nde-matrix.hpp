@@ -68,5 +68,8 @@ T matrixInfNorm(nde::Matrix<T> a);
 template <typename T>
 T matrix1Norm(nde::Matrix<T> a);
 
+template <typename T>
+nde::Matrix<T> inverse(nde::Matrix<T> a);
+
 } // namespace nde
 #endif

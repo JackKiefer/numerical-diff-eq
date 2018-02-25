@@ -16,6 +16,8 @@
 namespace nde
 {
 
+#define quickprint(THING) std::cout << #THING << ": \n" << THING << "\n";
+
 double maceps()
 {
   typedef union {
