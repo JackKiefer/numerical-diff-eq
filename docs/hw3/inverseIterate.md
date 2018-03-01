@@ -6,7 +6,7 @@ layout: default
 {% include mathjax.html %}
 
 
-# Power Iteration
+# Inverse Iteration
 
 *Routine Name:* inverseIterate
 

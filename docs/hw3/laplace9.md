@@ -6,7 +6,7 @@ layout: default
 {% include mathjax.html %}
 
 
-# Power Iteration
+# 9-point Laplace
 
 *Routine Name:* laplace9
 
