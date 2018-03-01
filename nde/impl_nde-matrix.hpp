@@ -62,9 +62,33 @@ nde::Matrix<T> hilbert(luint size)
 }
 
 template <typename T>
-nde::Matrix<T> tridiagonal(luint n, T subdiag, T diag, T superdiag)
+nde::Matrix<T> linspace(T xmin, T xmax, luint size)
 {
-  auto a = zeroes<T>(n,n);
+  return nde::matrixMap([=](T i, T j) { 
+      (void)i;
+      return xmin + j*(xmax-xmin)/((T)size-1); 
+      }, zeroes<T>(1,size));
+}
+
+template <typename T>
+nde::Matrix<T> meshgridX(nde::Matrix<T> lin)
+{
+  return nde::Matrix<T>(lin[0].size(), lin[0]);
+}
+
+template <typename T>
+nde::Matrix<T> meshgridY(nde::Matrix<T> lin)
+{
+  return nde::matrixMap([=](T i, T j) {
+        (void)j;
+        return lin[0][(luint)i];
+      }, zeroes<T>(lin[0].size(),lin[0].size()));
+}
+
+template <typename T>
+nde::Matrix<T> tridiagonal(luint n, T subdiag, T diag, T superdiag, T nondiag)
+{
+  auto a = nMatrix<T>(n,n,nondiag);
   a[0][0] = diag;
   a[0][1] = superdiag;
   for (auto i = 1u; i < n - 1; ++i)
@@ -76,6 +100,36 @@ nde::Matrix<T> tridiagonal(luint n, T subdiag, T diag, T superdiag)
   a[n-1][n-1] = diag;
   a[n-1][n-2] = subdiag;
   return a;
+}
+
+template <typename T>
+nde::Matrix<T> tridiagonal(luint n, T subdiag, T diag, T superdiag)
+{
+  return nde::tridiagonal<T>(n, subdiag, diag, superdiag, (T)0.0);
+}
+
+template <typename T>
+nde::Matrix<T> blockDiagram(nde::Matrix<nde::Matrix<T>> diagram)
+{
+  auto patHeight = diagram.size() * diagram[0][0].size();
+  auto patWidth  = diagram[0].size() * diagram[0][0].size();
+
+  auto resultMatrix = nde::zeroes<T>(patHeight, patWidth);
+
+  auto height = diagram.size();
+  auto width  = diagram[0].size();
+
+  for (auto i = 0u; i < resultMatrix.size(); ++i)
+  {
+    for (auto j = 0u; j < resultMatrix[i].size(); ++j)
+    {
+#if 0
+      std::cout << "resultMatrix[" << i << "][" << j << "] = diagram[" << i/height << "][" << j/width << "][" << i-(height*(i/height)) << "][" << j-(width*(j/width)) << "]\n";
+#endif
+      resultMatrix[i][j] = diagram[i/height][j/width][i - (height*(i/height))][j - (width*(j/width))];
+    }
+  }
+  return resultMatrix;
 }
 
 template <typename T>

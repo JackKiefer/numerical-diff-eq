@@ -39,6 +39,9 @@ template <typename T>
 nde::Matrix<T> hilbert(luint size);
 
 template <typename T>
+nde::Matrix<T> tridiagonal(luint n, T subdiag, T diag, T superdiag, T nondiag);
+
+template <typename T>
 nde::Matrix<T> tridiagonal(luint n, T subdiag, T diag, T superdiag);
 
 template <typename T>
@@ -71,5 +74,13 @@ T matrix1Norm(nde::Matrix<T> a);
 template <typename T>
 nde::Matrix<T> inverse(nde::Matrix<T> a);
 
+template <typename T>
+nde::Matrix<T> linspace(T xmin, T xmax, luint size);
+
+template <typename T>
+nde::Matrix<T> meshgridX(nde::Matrix<T> lin);
+
+template <typename T>
+nde::Matrix<T> blockDiagram(nde::Matrix<nde::Matrix<T>> pattern);
 } // namespace nde
 #endif

@@ -212,7 +212,6 @@ nde::Matrix<T> gaussElim(nde::Matrix<T> a, nde::Matrix<T> b)
     auto pivotRow = nde::colMax(u, k + 1); 
     u = nde::rowSwap(u,pivotRow,k);
     l = nde::rowSwap(l,(int)k,(int)pivotRow,0,(int)k-1);
-    quickprint(l)
     p = nde::rowSwap(p,pivotRow,k);
     for (auto elimRow = k + 1; elimRow <= m; ++elimRow)
     {
@@ -298,9 +297,9 @@ T inverseIterate(nde::Matrix<T> a, luint const & MAX_ITERS)
     auto c_k = nde::pNorm(nde::rowVector(mb),2);
     b_k = mb/c_k;
   }
-  std::cout << b_k << std::endl;
 
-  return 0;
+  return powerIterate(a, MAX_ITERS);
+//  return b_k[0][0];
 }
 
 } // namespace nde
