@@ -16,6 +16,12 @@ You're a beautiful human being!
 
 # Table of Contents
 
+## Homework 4
+* [Problem 1) Gauss-Seidel](docs/hw4/gaussSeidel.md)
+* [Problems 2 and 3) Conjugate Gradient Method](docs/hw4/conjugateGradient.md)
+* [Problem 4) Explicit Euler](docs/hw4/explicitEuler.md)
+
+
 ## Homework 3
 * [Problem 1) Norms](docs/hw3/norms.md)
 * [Problem 2) Power Iteration](docs/hw3/power.md)
