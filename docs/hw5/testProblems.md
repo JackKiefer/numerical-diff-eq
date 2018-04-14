@@ -6,9 +6,9 @@ layout: default
 {% include mathjax.html %}
 
 
-# 9-point Laplace
+# Test Problems
 
-*Routine Name:* laplace9
+*Routine Name:* hw5TestProblems
 
 *Author:* Jack Kiefer
 
@@ -16,39 +16,30 @@ layout: default
 
 ## Description
 
-Compute the solution to the Laplace equation on a 5x5 grid using a 9-point stencil 
+A nifty function to automatically compute the solution to the initial value problem
+
+\\[u' = \lambda u\\]
+
+and the logisitc model
+
+\\[P' = \gamma P - \Beta P\\]
+
+for problem 1 on homework 5.
 
 ## Input
 
-* ``func`` - The forcing function \\(f\\)
+* ``a`` - The initial confition \\(u_0\\)
+* ``p`` - The initial confition \\(P_0\\)
 
 ## Output 
 
-Returns an function that is a solution
+Returns a pair of functions that solve the test problems
 
-## Code
+## Declaration
 
 {% highlight C++ %}
-
 template <typename T, typename F>
-std::function<T(T)> laplace9(F func)
-{
-  unsigned long n = 5;
-  auto nblock = n - 2;
-  auto b = nde::tridiagonal<double>(nblock, 4, 8, 4);
-  auto q = nde::tridiagonal<double>(nblock, 8, 20, 8);
-  auto z = nde::zeroes<double>(nblock,nblock);
-  auto a = nde::blockDiagram(nde::tridiagonal<nde::Matrix<double>>(nblock, q, b, q, z)) * -1.0;
-  auto bs = nde::zeroes<double>(nblock*nblock,1);
-  for (auto i = 0u; i < nblock; ++i)
-  {
-    for (auto j = 0u; j < nblock; ++j)
-    bs[i][j] = func(i*j);
-  }
-
-  auto u = nde::gaussElim(a, bs);
-  return nde::mapToFunc(u);
-}
+std::pair<std::function<F(T)>,std::function<F(T)>> hw5TestProblems(T a, T p);
 
 {% endhighlight %}
 
@@ -56,12 +47,17 @@ std::function<T(T)> laplace9(F func)
 
 {% highlight C++ %}
 
-auto f = nde::laplace9(farg(std::sin));
-std::cout << f(0) << std::endl;
+int main()
+{
+    auto p = nde::hw5TestProblems(1, 1);
+    std::cout << p.first(0) << std::endl;
+    std::cout << p.second(0) << std::endl;
+}
 
 {% endhighlight %}
 
 ## Result
 ```
+0
 0
 ```
