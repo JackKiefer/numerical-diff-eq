@@ -22,9 +22,9 @@ int main()
 
   std::cout << "Problem 3\n";
   /* Problem 3 */
-  for (luint i = 10; i <= 10000; i *= 10)
+  for (luint i = 3; i <= 100; i += 1)
   {
-   auto c = nde::tridiagonal<double>(3, 1, -2, 1);
+   auto c = nde::tridiagonal<double>(i, 1, -2, 1);
    std::cout << nde::powerIterate(c, 10) << std::endl;
   }
 
@@ -34,6 +34,7 @@ int main()
   auto d = nde::tridiagonal<double>(3, 1, -2, 1);
   std::cout << nde::inverseIterate(d, 10) << std::endl;
 #endif
+#if 0
 
   /* Params */
   unsigned long n = 5;
@@ -55,7 +56,7 @@ int main()
   return u;
 
   quickprint(u)
-
+#endif
   
 
 

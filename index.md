@@ -16,6 +16,20 @@ You're a beautiful human being!
 
 # Table of Contents
 
+## Homework 6
+* [Problem 1) Explicit textbook examples](docs/hw6/examples.md)
+* [Problems 2 and 3) Implicit textbook examples](docs/hw6/examples.md)
+* [Problem 4) Predictor-corrector](docs/hw6/predictorCorrector.md)
+* [Problem 5) More Runge Kutta](docs/hw6/rungeKutta.md)
+
+## Homework 5
+* [Problem 1) Test problems](docs/hw5/testProblems.md)
+* [Problem 2) More Explicit Euler](docs/hw5/moreExplicitEuler.md)
+* [Problem 3) More Implicit Euler / Newton Method](docs/hw5/moreImplicitEuler.md)
+* [Problem 4) Runge Kutta](docs/hw5/rungeKutta.md)
+* [Problem 5) Adams-Bashforth-Moulton](docs/hw5/adamsBashforth.md)
+
+
 ## Homework 4
 * [Problem 1) Gauss-Seidel](docs/hw4/gaussSeidel.md)
 * [Problems 2 and 3) Conjugate Gradient Method](docs/hw4/conjugateGradient.md)
