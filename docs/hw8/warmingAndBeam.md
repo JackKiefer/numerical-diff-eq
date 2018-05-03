@@ -6,9 +6,9 @@ layout: default
 {% include mathjax.html %}
 
 
-# 9-point Laplace
+# Hyperbolic PDEs with the Warming and Beam Method
 
-*Routine Name:* laplace9
+*Routine Name:* warmingAndBeam
 
 *Author:* Jack Kiefer
 
@@ -16,39 +16,24 @@ layout: default
 
 ## Description
 
-Compute the solution to the Laplace equation on a 5x5 grid using a 9-point stencil 
+Use the Warming and Beam method to compute the solution to the PDE
+
+\\[u_t + 2u_x = 0, u(x,y) = u_0\\]
 
 ## Input
 
-* ``func`` - The forcing function \\(f\\)
+* ``u0`` - The initial condition \\(u_0\\)
 
 ## Output 
 
 Returns an function that is a solution
 
-## Code
+## Declaration
 
 {% highlight C++ %}
 
-template <typename T, typename F>
-std::function<T(T)> laplace9(F func)
-{
-  unsigned long n = 5;
-  auto nblock = n - 2;
-  auto b = nde::tridiagonal<double>(nblock, 4, 8, 4);
-  auto q = nde::tridiagonal<double>(nblock, 8, 20, 8);
-  auto z = nde::zeroes<double>(nblock,nblock);
-  auto a = nde::blockDiagram(nde::tridiagonal<nde::Matrix<double>>(nblock, q, b, q, z)) * -1.0;
-  auto bs = nde::zeroes<double>(nblock*nblock,1);
-  for (auto i = 0u; i < nblock; ++i)
-  {
-    for (auto j = 0u; j < nblock; ++j)
-    bs[i][j] = func(i*j);
-  }
-
-  auto u = nde::gaussElim(a, bs);
-  return nde::mapToFunc(u);
-}
+template <typename T>
+std::function<T(T)> warmingAndBeam(T u0);
 
 {% endhighlight %}
 
@@ -56,12 +41,12 @@ std::function<T(T)> laplace9(F func)
 
 {% highlight C++ %}
 
-auto f = nde::laplace9(farg(std::sin));
-std::cout << f(0) << std::endl;
+auto f = nde:WarmingAndBeam(3)
+std::cout << f(3) << std::endl;
 
 {% endhighlight %}
 
 ## Result
 ```
-0
+12.186186186186
 ```
