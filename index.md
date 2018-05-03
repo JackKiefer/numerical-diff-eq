@@ -16,11 +16,23 @@ You're a beautiful human being!
 
 # Table of Contents
 
+## Homework 8
+* [Problem 1.1) Upwinding](docs/hw8/upwinding.md)
+* [Problem 1.2) Lax-wendorff Method](docs/hw8/laxwendorff.md)
+* [Problem 1.3) Warming and Beam Method](docs/hw8/warmingAndBeam.md)
+* [Problem 2) vonNeumann stability analysis](docs/hw8/stability.md)
+
+## Homework 7
+* [Problem 1) Heat Equation with Explicit Euler](docs/hw7/heatExplicit.md)
+* [Problems 2 and 3) Heat Equation with Implicit Euler](docs/hw7/heatImplicit.md)
+* [Problem 4) Heat Equation with Predictor-corrector](docs/hw7/heatPredictor.md)
+* [Problem 5) Heat Equation with Runge Kutta](docs/hw7/heatRunge.md)
+
 ## Homework 6
-* [Problem 1) Explicit textbook examples](docs/hw6/examples.md)
-* [Problems 2 and 3) Implicit textbook examples](docs/hw6/examples.md)
-* [Problem 4) Predictor-corrector](docs/hw6/predictorCorrector.md)
-* [Problem 5) More Runge Kutta](docs/hw6/rungeKutta.md)
+* [Problem 1) Chapter 7 Experiments](docs/hw6/experiments.md)
+* [Problems 2 and 3) Implicit Euler Experiments](docs/hw6/experiments2and3.md)
+* [Problem 4) Predictor-corrector experiment](docs/hw6/experiments2and3.md)
+* [Problem 5) Runge Kutta experiment](docs/hw6/experiments2and3.md)
 
 ## Homework 5
 * [Problem 1) Test problems](docs/hw5/testProblems.md)
@@ -29,12 +41,10 @@ You're a beautiful human being!
 * [Problem 4) Runge Kutta](docs/hw5/rungeKutta.md)
 * [Problem 5) Adams-Bashforth-Moulton](docs/hw5/adamsBashforth.md)
 
-
 ## Homework 4
 * [Problem 1) Gauss-Seidel](docs/hw4/gaussSeidel.md)
 * [Problems 2 and 3) Conjugate Gradient Method](docs/hw4/conjugateGradient.md)
 * [Problem 4) Explicit Euler](docs/hw4/explicitEuler.md)
-
 
 ## Homework 3
 * [Problem 1) Norms](docs/hw3/norms.md)
