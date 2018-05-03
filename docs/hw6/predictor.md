@@ -6,9 +6,9 @@ layout: default
 {% include mathjax.html %}
 
 
-# 9-point Laplace
+# Predictor-Corrector Method
 
-*Routine Name:* laplace9
+*Routine Name:* predictorCorrector
 
 *Author:* Jack Kiefer
 
@@ -16,39 +16,25 @@ layout: default
 
 ## Description
 
-Compute the solution to the Laplace equation on a 5x5 grid using a 9-point stencil 
+Use the Predictor-corrector method to compute the solution to the general initial value problem of the form
+
+\\[y' = f(t,y), y(t_0) = y_0\\]
 
 ## Input
 
-* ``func`` - The forcing function \\(f\\)
+* ``func`` - The function \\(f\\)
+* ``t0`` - The initial value \\(t_0\\)
 
 ## Output 
 
 Returns an function that is a solution
 
-## Code
+## Declaration
 
 {% highlight C++ %}
 
 template <typename T, typename F>
-std::function<T(T)> laplace9(F func)
-{
-  unsigned long n = 5;
-  auto nblock = n - 2;
-  auto b = nde::tridiagonal<double>(nblock, 4, 8, 4);
-  auto q = nde::tridiagonal<double>(nblock, 8, 20, 8);
-  auto z = nde::zeroes<double>(nblock,nblock);
-  auto a = nde::blockDiagram(nde::tridiagonal<nde::Matrix<double>>(nblock, q, b, q, z)) * -1.0;
-  auto bs = nde::zeroes<double>(nblock*nblock,1);
-  for (auto i = 0u; i < nblock; ++i)
-  {
-    for (auto j = 0u; j < nblock; ++j)
-    bs[i][j] = func(i*j);
-  }
-
-  auto u = nde::gaussElim(a, bs);
-  return nde::mapToFunc(u);
-}
+std::function<T(T)> predictorCorrector(F func, T t0);
 
 {% endhighlight %}
 
@@ -56,12 +42,12 @@ std::function<T(T)> laplace9(F func)
 
 {% highlight C++ %}
 
-auto f = nde::laplace9(farg(std::sin));
+auto f = nde::predictorCorrector(farg(std::sin), 1);
 std::cout << f(0) << std::endl;
 
 {% endhighlight %}
 
 ## Result
 ```
-0
+1
 ```

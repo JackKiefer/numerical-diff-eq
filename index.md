@@ -29,10 +29,9 @@ You're a beautiful human being!
 * [Problem 5) Heat Equation with Runge Kutta](docs/hw7/heatRunge.md)
 
 ## Homework 6
-* [Problem 1) Chapter 7 Experiments](docs/hw6/experiments.md)
 * [Problems 2 and 3) Implicit Euler Experiments](docs/hw6/experiments2and3.md)
 * [Problem 4) Predictor-corrector experiment](docs/hw6/predictor.md)
-* [Problem 5) Runge Kutta experiment](docs/hw6/rungekutta.md)
+* [Problem 5) Runge Kutta experiment](docs/hw6/rungekuttaa.md)
 
 ## Homework 5
 * [Problem 1) Test problems](docs/hw5/testProblems.md)
